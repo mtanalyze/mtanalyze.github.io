@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MT Analyze — Reconstruct Business Transactions from SWIFT MT Messages</title>
+<title>MT Analyze — The fast way through a stack of SWIFT MT messages.</title>
 <meta name="description" content="Understand, analyse and test SWIFT MT messages — for migration, change and settlement projects. Local, portable, ISO 15022 SR2025 built-in.">
 <link rel="canonical" href="https://www.mtanalyze.com">
 <style>
@@ -304,7 +304,7 @@
   .price-features li { font-size: .85rem; color: var(--text); display: flex; gap: .5rem; }
   .price-features li::before { content: "✓"; color: #16a34a; font-weight: 700; flex-shrink: 0; }
 
-  /* ── Entry barrier block ───��────────────────────────────── */
+  /* ── Entry barrier block ───  ────────────────────────────── */
   .entry-block { background: var(--sky); }
   .entry-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
@@ -379,7 +379,7 @@
   <div class="hero-badge">Settlement · SWIFT MT</div>
   <h1>The <em>fast way</em> through a stack of SWIFT MT messages.</h1>
   <p class="hero-sub">
-    An open-source desktop tool for the interactive analysis of SWIFT MT messages — mix instructions, statements and confirmations of any MT type in one table, decode ISO 15022 in place, trace the full settlement choreography across agents. Built by a practitioner — for analysis, migration and UAT work in banks.
+    An open-source desktop tool for analysing SWIFT MT messages. Mix any MT type in one table, decode ISO 15022 in place, and trace a transaction across all agents. Built by a practitioner — for analysis, migration and UAT work in banks.
   </p>
   <div class="hero-actions">
     <a class="btn-primary" href="https://github.com/mtanalyze/mtanalyze/releases/latest">
@@ -390,14 +390,14 @@
   <p class="hero-note">Java 17+ · Windows · macOS · Linux · VDI · Portable App · No Installation · GitHub · Maven Central · Nexus</p>
   <p class="hero-note">Download the JAR and double-click to start. If that doesn't work: <code style="background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:4px;">javaw -jar MT-Analyze-&lt;version&gt;.jar</code></p>
   <div class="screenshot-wrap">
-    <img src="images/gui.png" alt="MT Analyze Screenshot" loading="lazy">
+    <img src="images/gui.gif" alt="MT Analyze in action — screen recording" loading="lazy">
   </div>
 </section>
 
 <!-- ══ Problem ══════════════════════════════════════════════ -->
 <div class="problem" id="problem">
   <div class="problem-inner">
-    <p class="problem-hook"><strong>SWIFT MT is old. Nobody wants to work with it. But the entire settlement infrastructure runs on it.</strong> So here you are — in a T+1 project or migration, having to trace a large number of SWIFT messages produced by legacy or COTS applications, with nothing but basic tools. Finding the needle in the haystack.</p>
+    <p class="problem-hook"><strong>SWIFT MT is old. Nobody wants to work with it. But the entire settlement infrastructure runs on it.</strong> So here you are — in a T+1 or migration project, tracing thousands of messages from legacy and COTS systems with nothing but basic tools. Finding the needle in the haystack.</p>
     <h2>Archaeology of settlement processes — the bottleneck in every project.</h2>
     <p class="problem-lead">
       Manually analysing and testing SWIFT messages takes days.
@@ -407,21 +407,21 @@
       <div class="pain-icon">🏛️</div>
       <div>
         <h4>SWIFT tags are like hieroglyphics</h4>
-        <p>Analysing historically grown systems is like archaeology. Tags, qualifiers and codes have to be looked up in the SWIFT spec — without tools, every interpretation costs time.</p>
+        <p>Tags, qualifiers and codes all have to be looked up in the SWIFT spec. Without tools, every interpretation costs time.</p>
       </div>
     </div>
     <div class="pain-item">
       <div class="pain-icon">🗄️</div>
       <div>
         <h4>The developers are retired — the messages are not</h4>
-        <p>Old mainframe systems still run, but the knowledge is gone. Documentation is outdated or missing. Business logic and population rules must be reconstructed from SWIFT messages and bookings.</p>
+        <p>Old systems still run, but the knowledge is gone. Documentation is outdated or missing. Business logic and population rules have to be reconstructed from the messages themselves.</p>
       </div>
     </div>
     <div class="pain-item">
       <div class="pain-icon">🔀</div>
       <div>
         <h4>One transaction, many lifecycle actions — no tool to link them</h4>
-        <p>Instruction, matching status, confirmation, statement, cash posting — each lifecycle action a different message type, in separate logs. Tracing the connection to the business transaction and following the lifecycle end to end is barely possible manually.</p>
+        <p>Instruction, matching status, confirmation, statement, cash posting — each a different message type, in a separate log. Linking them back to one transaction by hand is barely possible.</p>
       </div>
     </div>
     <div class="pain-item">
@@ -442,7 +442,7 @@
       <div class="pain-icon">🔄</div>
       <div>
         <h4>Delegation doesn't solve the problem</h4>
-        <p>Handing analysis to consultants or their juniors sounds like a solution — but the work keeps coming back. Business context is missing, questions arise, corrections take time. The bottleneck remains.</p>
+        <p>Handing analysis to consultants sounds like a solution — but the work keeps coming back. Business context is missing, questions pile up, corrections take time. The bottleneck remains.</p>
       </div>
     </div>
   </div>
@@ -464,13 +464,13 @@
       </div>
       <div class="usp-card">
         <div class="usp-icon">🏛️</div>
-        <h3>No lookup — no myStandards</h3>
+        <h3>No lookup needed</h3>
         <p>ISO 15022 Data Field Dictionary SR2025 built in — tags, qualifiers and components with descriptions directly in the table. No SWIFT portal, no detour. Updated annually.</p>
       </div>
       <div class="usp-card">
         <div class="usp-icon">🎓</div>
         <h3>For experts — no SWIFT specialist required</h3>
-        <p>Settlement experts, business analysts, project managers — and developers and testers: What does the system really produce? Is the format correct? Why does field X differ? MT Analyze makes SWIFT MT output directly readable — for debugging, validating and tracing, without detours through logs or the spec.</p>
+        <p>Settlement experts, analysts, project managers, developers and testers alike. What does the system really produce? Is the format correct? Why does field X differ? MT Analyze makes SWIFT MT output readable — for debugging, validating and tracing, without detours through logs or the spec.</p>
       </div>
       <div class="usp-card">
         <div class="usp-icon">📋</div>
@@ -496,7 +496,7 @@
     <div class="how-grid">
       <div class="how-step">
         <h3>Get an overview</h3>
-        <p>Load data — immediately a structured table. All fields decoded, all sources harmonised. Block-4 examples from the Clearstream SWIFT guides are enough to start — the app generates the header, every field with context directly visible. No live system needed.</p>
+        <p>Load data and get a structured table at once — all fields decoded, all sources harmonised. Even Block-4 examples from the Clearstream SWIFT guides are enough to start; the app generates the header. No live system needed.</p>
       </div>
       <div class="how-step">
         <h3>Explore and test</h3>
@@ -527,11 +527,6 @@
         <p>What does the legacy system really send — including edge cases? Load production messages, filter, evaluate systematically. No gaps in documentation.</p>
       </div>
       <div class="uc-card">
-        <div class="uc-phase">Requirements</div>
-        <h4>Derive interface behaviour from facts</h4>
-        <p>Fields, formats, population rules directly from real messages — not from outdated documentation or assumptions.</p>
-      </div>
-      <div class="uc-card">
         <div class="uc-phase">Test Data</div>
         <h4>Assemble relevant cases quickly</h4>
         <p>From thousands of production messages, filter the relevant edge cases in minutes and export as a test set.</p>
@@ -546,11 +541,6 @@
         <h4>Detect deviations immediately</h4>
         <p>Check the first real messages of the new system against the baseline. Find breaks before escalation.</p>
       </div>
-      <div class="uc-card">
-        <div class="uc-phase">Parallel Run</div>
-        <h4>Compare old and new without gaps</h4>
-        <p>Messages from both systems loaded simultaneously — field-level differences, reproducible and documented.</p>
-      </div>
     </div>
   </div>
 </section>
@@ -563,34 +553,19 @@
     <p class="section-sub">For settlement experts, developers and testers — no SWIFT specialist required, no learning curve.</p>
     <div class="features-grid">
       <div class="feature-card">
-        <div class="feature-tag">Harmonisation</div>
-        <h3>Multiple sources — one table</h3>
-        <p>SWIFT MT (ISO 15022) — MT 527, MT 558, MT 569, MT 536, MT 940 — from multiple internal systems, CSDs, triparty agents and CCPs loaded simultaneously. All in one unified table, harmonised and decoded. Transactions in MT 536 appear in the same view as an MT 54x — directly comparable side by side.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-tag">Dictionary</div>
-        <h3>SWIFT hieroglyphics decoded instantly</h3>
-        <p>Tags, qualifiers and components are displayed with descriptions from the <strong>ISO 15022 Data Field Dictionary SR2025</strong> directly in the table — no access to myStandards needed, no lookup in the spec. SR built in, updated annually. An extensible user dictionary adds project-specific meanings for historically grown systems.</p>
-      </div>
-      <div class="feature-card">
         <div class="feature-tag">Visualisation &amp; Filter</div>
         <h3>Transaction type at a glance — nothing missed</h3>
-        <p>Receive, Deliver, Cancel, Reject — the app recognises the transaction type automatically and shows it as an icon directly in the table. Quick filter across all columns: <code>=EUR</code>, <code>^DE</code>, <code>EUR+USD</code>, <code>10-20</code>. AND/OR switchable. Hide columns, adjust layouts — and save everything as a profile so the same analysis is always reproducible.</p>
-      </div>
-      <div class="feature-card">
-        <div class="feature-tag">Export &amp; Clipboard</div>
-        <h3>Export to Excel</h3>
-        <p>Cells, rows, entire tables — copy directly into Excel. Export diffs as CSV. The next step in the project starts without formatting effort.</p>
+        <p>Receive, Deliver, Cancel, Reject — the app detects the transaction type automatically and shows it as an icon. Quick filter across all columns: <code>=EUR</code>, <code>^DE</code>, <code>EUR+USD</code>, <code>10-20</code>, AND/OR switchable. Hide columns, adjust layouts, and save it all as a profile so the analysis stays reproducible.</p>
       </div>
       <div class="feature-card">
         <div class="feature-tag">Diff &amp; Validation</div>
         <h3>Check messages — syntactically, semantically, against the standard</h3>
-        <p>Field comparison between two or more messages — colour-coded, "Differences only" filters to breaks. Semantically: instruction against confirmation, MT 54x against MT 536 — equivalent fields are automatically matched across message types. Messages can be validated against the ISO 15022 standard: mandatory fields, formats, permitted codes. Export as UAT evidence or error log.</p>
+        <p>Compare two or more messages field by field, colour-coded; "Differences only" filters to the breaks. Equivalent fields are matched across message types — instruction against confirmation, MT 54x against MT 536. Validate against the ISO 15022 standard: mandatory fields, formats, permitted codes. Export as UAT evidence or error log.</p>
       </div>
       <div class="feature-card">
         <div class="feature-tag">Transaction Tracing</div>
         <h3>Business transaction and lifecycle — fully linked</h3>
-        <p>Every SWIFT MT message is a lifecycle action of the same business transaction: MT 527 instruction, MT 548 matching status, MT 544/546 confirmation, MT 536 statement, MT 940 cash posting — one transaction, many events, many systems. MT Analyze establishes the connection: all messages linked via SEME, RELA, PREV, TRCI in seconds, the complete lifecycle at a glance. What arrived when, in which status, with which posting impact — the end-to-end trace makes the business transaction readable.</p>
+        <p>Each message is one lifecycle action of the same transaction: MT 527 instruction, MT 548 matching status, MT 544/546 confirmation, MT 536 statement, MT 940 cash posting — one transaction, many events, many systems. MT Analyze links them all via SEME, RELA, PREV and TRCI in seconds. What arrived when, in which status, with which posting impact — the full trace makes the transaction readable.</p>
       </div>
     </div>
   </div>
@@ -604,15 +579,17 @@
     <p class="section-label">Who's behind it</p>
     <h2 class="section-title">Built by practitioners — for practitioners.</h2>
     <p class="section-sub" style="max-width:760px;">
-      Centerscout is a small IT consulting firm based in the Rhine-Main region near Frankfurt, founded in 2009.
-      Over 25 years in IT consulting — starting in Java development and EAI,
-      with the last 15+ years as a securities business analyst at banks in Frankfurt.
-      Clients work directly with the consultant: technical depth and business domain expertise in one.
-      The systems are complex. The projects are wicked problems — requirements shift, legacy behaviour is undocumented,
-      and every answer raises three new questions. And at the centre of it all: SWIFT MT.
-      Old technology. Nobody wants to work with it. But the entire settlement infrastructure runs on it.
-      Getting an overview, truly understanding what's happening, and being confident nothing was missed: that's the actual challenge.
-      MT Analyze was built out of these engagements — to make SWIFT MT messages part of the answer, not part of the problem.
+      Centerscout is a small IT consulting firm near Frankfurt, founded in 2009.
+      Over 25 years in IT consulting — starting in Java and EAI, the last 15+ as a securities
+      business analyst at Frankfurt banks. Clients work directly with the consultant:
+      technical depth and domain expertise in one.
+      The systems are complex and the projects are wicked problems — requirements shift,
+      legacy behaviour is undocumented, every answer raises three new questions.
+      At the centre of it all: SWIFT MT. Old technology nobody wants to touch,
+      yet the whole settlement infrastructure runs on it.
+      Getting an overview, understanding what's really happening, and being sure nothing was
+      missed — that's the real challenge.
+      MT Analyze was built out of these projects, to make SWIFT MT part of the answer, not the problem.
     </p>
     <div style="display:flex; flex-wrap:wrap; gap:.6rem; margin-top:2rem;">
       <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">Securities Operations</span>
@@ -638,17 +615,6 @@
       </a>
       <a class="btn-secondary" href="https://github.com/mtanalyze/mtanalyze" target="_blank" rel="noopener">View on GitHub</a>
     </div>
-    <div class="cta-requirements">
-      <span>Java 17+</span>
-      <span>Windows · macOS · Linux · VDI</span>
-      <span>Portable App · No Installation</span>
-      <span>GitHub · Maven Central · Nexus</span>
-    </div>
-    <p style="margin-top:1.5rem; font-size:.85rem; color:#93c5fd;">
-      Building on it or rolling out via your bank's Nexus? The core is on
-      <a href="https://central.sonatype.com/artifact/com.mtanalyze/mtanalyze" target="_blank" rel="noopener" style="color:#bfdbfe;">Maven Central</a>
-      — <code style="background:rgba(255,255,255,.1); padding:.1rem .4rem; border-radius:4px; color:#dbeafe;">com.mtanalyze:mtanalyze</code>
-    </p>
     <p style="margin-top:2rem; font-size:.82rem; color:#93c5fd;">
       Bug? <a href="https://github.com/mtanalyze/mtanalyze/issues" target="_blank" rel="noopener" style="color:#bfdbfe;">Open a GitHub Issue.</a>
       Custom extensions or project support: <a href="mailto:info@mtanalyze.com" style="color:#bfdbfe;">info@mtanalyze.com</a>.
@@ -667,13 +633,11 @@
     <a href="impressum.html">Imprint</a>
   </div>
   <p style="font-size:.78rem; color:#4a6080;">
-    MT Analyze is a product of <a href="https://www.centerscout.de" target="_blank" rel="noopener" style="color:#4a6080;">Centerscout GmbH</a> ·
-    &copy; 2026 Centerscout GmbH · Apache License 2.0 ·
+    &copy; 2026 <a href="https://www.centerscout.de" target="_blank" rel="noopener" style="color:#4a6080;">Centerscout GmbH</a> · Apache License 2.0 ·
     <a href="https://www.mtanalyze.com" style="color:#4a6080;">www.mtanalyze.com</a>
   </p>
   <p style="font-size:.72rem; color:#3a5070; margin-top:.6rem; max-width:760px; margin-left:auto; margin-right:auto;">
-    SWIFT is a registered trademark of S.W.I.F.T. SCRL. ISO 15022 is a standard of the International Organization for Standardization (ISO).
-    MT Analyze is an independent open-source project and is not affiliated with S.W.I.F.T. SCRL, ISO or any other named organisation, and is neither sponsored nor endorsed by them.
+    SWIFT is a trademark of S.W.I.F.T. SCRL; ISO 15022 is an ISO standard. MT Analyze is an independent open-source project, not affiliated with or endorsed by either.
   </p>
 </footer>
 
