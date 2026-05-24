@@ -449,8 +449,21 @@
   <p class="hero-note">Java 17+ · Windows · macOS · Linux · VDI · Portable App · No Installation · GitHub · Maven Central · Nexus</p>
   <p class="hero-note">Download the JAR and double-click to start. If that doesn't work: <code style="background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:4px;">javaw -jar MT-Analyze-&lt;version&gt;.jar</code></p>
   <div class="screenshot-wrap">
-    <img src="images/gui.gif" alt="MT Analyze in action — screen recording" loading="lazy">
+    <img id="demo-img" src="images/gui.png" alt="MT Analyze in action — screen recording">
+    <span class="gif-loading" id="gif-badge">Loading demo…</span>
   </div>
+  <script>
+    (function () {
+      const img = document.getElementById('demo-img');
+      const badge = document.getElementById('gif-badge');
+      const gif = new Image();
+      gif.onload = function () {
+        img.src = gif.src;
+        badge.remove();
+      };
+      gif.src = 'images/gui.gif';
+    })();
+  </script>
 </section>
 
 <!-- ══ Problem ══════════════════════════════════════════════ -->
