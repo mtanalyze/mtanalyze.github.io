@@ -147,8 +147,23 @@
     border-radius: 12px; overflow: hidden;
     box-shadow: 0 24px 80px rgba(0,0,0,.55);
     border: 1px solid rgba(255,255,255,.1);
+    position: relative;
   }
   .screenshot-wrap img { display: block; width: 100%; height: auto; }
+  .screenshot-wrap .gif-loading {
+    position: absolute; bottom: .75rem; right: .75rem;
+    background: rgba(0,0,0,.55); color: #fff;
+    font-size: .75rem; font-weight: 600; padding: .3rem .65rem;
+    border-radius: 999px; pointer-events: none;
+    display: flex; align-items: center; gap: .4rem;
+  }
+  .screenshot-wrap .gif-loading::before {
+    content: "";
+    display: inline-block; width: 10px; height: 10px;
+    border: 2px solid rgba(255,255,255,.4); border-top-color: #fff;
+    border-radius: 50%; animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   /* ── Problem block ──────────────────────────────────────── */
   .problem {
