@@ -230,6 +230,14 @@
       height: auto;
       border-radius: 8px;
     }
+    .showcase-caption {
+      text-align: center;
+      color: var(--fg-muted);
+      font-size: 13px;
+      margin: 14px auto 0;
+      max-width: 720px;
+    }
+    .showcase-caption strong { color: var(--fg); font-weight: 600; }
     .inputs {
       display: flex;
       gap: 10px;
@@ -579,8 +587,11 @@
     <section class="showcase">
       <div class="container">
         <div class="showcase-frame">
-          <img src="gui.gif" alt="MT Analyze main window showing the entries table, tag view and diff view">
+          <img src="gui.gif" alt="MT Analyze demo: a sample MT 536 securities statement from Citi is loaded via drag &amp; drop, then two rows are compared side by side in the Diff view">
         </div>
+        <p class="showcase-caption">
+          Demo: a sample <strong>MT 536</strong> securities statement from <a href="https://www.citibank.com/mss/sa/dcc/swift/iso_15022/msg_fmt_matrix.html">Citi&rsquo;s ISO 15022 message format matrix</a>, loaded by drag &amp; drop, with two rows compared in the Diff view.
+        </p>
 
         <div class="inputs" aria-label="Ways to load SWIFT MT data">
           <span class="input-chip">
