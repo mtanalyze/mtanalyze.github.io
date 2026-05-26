@@ -1,172 +1,210 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legal Notice &amp; Privacy Policy — MT Analyze App</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Impressum &mdash; MT Analyze</title>
+  <meta name="description" content="Impressum und Anbieterkennzeichnung gem&auml;&szlig; &sect;5 TMG f&uuml;r mtanalyze.com.">
+  <meta name="robots" content="noindex, follow">
+  <meta name="theme-color" content="#0b1220">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b1220'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Inter,Arial' font-size='34' font-weight='700' fill='%2378b6ff' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --navy: #0f2340;
-      --blue: #1d4ed8;
-      --text: #1e293b;
-      --muted: #64748b;
-      --border: #e2e8f0;
+      --bg: #0b1220;
+      --bg-elev: #111a2e;
+      --fg: #e7edf7;
+      --fg-muted: #9aa6bd;
+      --accent: #78b6ff;
+      --accent-strong: #4f9bff;
+      --border: #1f2a44;
+      --max: 760px;
     }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      color: var(--text); background: #f8fafc; line-height: 1.6; }
-    header {
-      background: var(--navy); color: #fff;
-      padding: 1.25rem 2rem;
-      display: flex; align-items: center; gap: 1.5rem;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
     }
-    header a { color: #93c5fd; text-decoration: none; font-size: .9rem; }
-    header a:hover { color: #fff; }
-    header strong { font-size: 1rem; color: #fff; }
-    main { max-width: 720px; margin: 3rem auto; padding: 0 1.5rem 5rem; }
-    h1 { font-size: 1.75rem; font-weight: 800; color: var(--navy); margin-bottom: 2.5rem; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-strong); text-decoration: underline; }
+
+    header.nav {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner, .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--fg);
+    }
+    .brand:hover { text-decoration: none; }
+    .brand-mark {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #1a2a4d, #0b1220);
+      border: 1px solid var(--border);
+      display: inline-flex; align-items: center; justify-content: center;
+      color: var(--accent); font-weight: 800; font-size: 15px;
+    }
+    .nav-back { color: var(--fg-muted); font-size: 14px; }
+
+    main { padding: 56px 0 80px; }
+    h1 {
+      font-size: 32px;
+      margin: 0 0 8px;
+      letter-spacing: -0.02em;
+      font-weight: 700;
+    }
     h2 {
-      font-size: 1.1rem; font-weight: 700; color: var(--navy);
-      margin: 2.5rem 0 .75rem;
-      padding-bottom: .4rem; border-bottom: 1px solid var(--border);
+      font-size: 18px;
+      margin: 36px 0 8px;
+      color: var(--fg);
+      font-weight: 600;
+      letter-spacing: -0.005em;
     }
-    h3 { font-size: .85rem; font-weight: 700; color: var(--muted);
-      text-transform: uppercase; letter-spacing: .08em; margin: 1.5rem 0 .4rem; }
-    p { font-size: .95rem; color: var(--text); margin-bottom: .75rem; }
-    a { color: var(--blue); }
+    p { margin: 0 0 14px; color: var(--fg); }
+    .muted { color: var(--fg-muted); font-size: 14px; }
+    address { font-style: normal; line-height: 1.6; }
+
+    .todo {
+      background: rgba(255, 180, 80, 0.10);
+      border: 1px dashed rgba(255, 180, 80, 0.6);
+      color: #ffcb7a;
+      border-radius: 4px;
+      padding: 1px 8px;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .notice {
+      margin: 0 0 32px;
+      padding: 14px 18px;
+      background: rgba(255, 180, 80, 0.08);
+      border: 1px solid rgba(255, 180, 80, 0.3);
+      border-radius: 8px;
+      color: #ffcb7a;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
     footer {
-      text-align: center; padding: 1.5rem;
-      font-size: .8rem; color: var(--muted);
       border-top: 1px solid var(--border);
+      padding: 24px 0 40px;
+      color: var(--fg-muted);
+      font-size: 13px;
     }
+    .foot-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .foot-inner a { color: var(--fg-muted); }
+    .foot-inner a:hover { color: var(--fg); }
   </style>
 </head>
 <body>
 
-<header>
-  <strong>MT Analyze App</strong>
-  <a href="index.html">← Back to Homepage</a>
-</header>
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="/" class="brand">
+        <span class="brand-mark">M</span>
+        <span>MT Analyze</span>
+      </a>
+      <a class="nav-back" href="/">&larr; Zur&uuml;ck zur Startseite</a>
+    </div>
+  </header>
 
-<main>
-  <h1>Legal Notice &amp; Privacy Policy</h1>
+  <main>
+    <div class="container">
+      <h1>Impressum</h1>
+      <p class="muted">Angaben gem&auml;&szlig; &sect;5 TMG</p>
 
-  <!-- ═══════════════════════════════════════ LEGAL NOTICE -->
-  <h2>Legal Notice</h2>
+      <h2>Anbieter</h2>
+      <address>
+        Centerscout GmbH<br>
+        Liegnitzer Weg 2c<br>
+        64625 Bensheim<br>
+        Deutschland
+      </address>
 
-  <h3>Information pursuant to § 5 TMG (German Telemedia Act)</h3>
-  <p>
-    Centerscout GmbH<br>
-    Liegnitzer Weg 2c<br>
-    64625 Bensheim<br>
-    Germany
-  </p>
+      <h2>Kontakt</h2>
+      <p>
+        Telefon: +49&nbsp;6251&nbsp;989573<br>
+        Telefax: +49&nbsp;6251&nbsp;989574<br>
+        E-Mail: <a href="mailto:r.schwarz@centerscout.de">r.schwarz@centerscout.de</a><br>
+        Web: <a href="https://www.centerscout.de">www.centerscout.de</a>
+      </p>
 
-  <h3>Represented by</h3>
-  <p>Ralf Schwarz</p>
+      <h2>Vertretungsberechtigter Gesch&auml;ftsf&uuml;hrer</h2>
+      <p>Ralf Schwarz</p>
 
-  <h3>Contact</h3>
-  <p>Email: <a href="mailto:info@centerscout.de">info@centerscout.de</a></p>
+      <h2>Registereintrag</h2>
+      <p>
+        Eintragung im Handelsregister<br>
+        Registergericht: Amtsgericht Darmstadt<br>
+        Registernummer: HRB 88344
+      </p>
 
-  <h3>Commercial Register</h3>
-  <p>
-    Registry Court: Darmstadt District Court<br>
-    Registration Number: HRB 88344
-  </p>
+      <h2>Umsatzsteuer-Identifikationsnummer</h2>
+      <p>
+        Gem&auml;&szlig; &sect;27a Umsatzsteuergesetz: DE268153013
+      </p>
 
-  <h3>Responsible for content pursuant to § 18 para. 2 MStV</h3>
-  <p>Ralf Schwarz, Liegnitzer Weg 2c, 64625 Bensheim, Germany</p>
+      <h2>Verantwortlich f&uuml;r den Inhalt nach &sect;18 Abs.&nbsp;2 MStV</h2>
+      <p>
+        Ralf Schwarz<br>
+        Anschrift wie oben
+      </p>
 
-  <!-- ══════════════════════════════════════════ DISCLAIMER -->
-  <h2>Disclaimer</h2>
+      <h2>Hinweise zum Projekt</h2>
+      <p>
+        MT Analyze ist ein quelloffenes Desktop-Werkzeug f&uuml;r die Analyse von
+        SWIFT-MT-Nachrichten, ver&ouml;ffentlicht unter der
+        <a href="https://github.com/mtanalyze/mtanalyze/blob/main/LICENSE">Apache License 2.0</a>.
+        Der Quellcode ist auf
+        <a href="https://github.com/mtanalyze/mtanalyze">GitHub</a> verf&uuml;gbar.
+        SWIFT ist eine eingetragene Marke der S.W.I.F.T. SCRL; MT Analyze steht in
+        keiner Verbindung zu S.W.I.F.T. SCRL.
+      </p>
 
-  <h3>Liability for Content</h3>
-  <p>
-    The content of this website has been compiled with the utmost care.
-    However, we cannot guarantee the accuracy, completeness or timeliness
-    of the content. As a service provider, we are responsible for our own
-    content on these pages in accordance with general law (§ 7 para. 1 TMG).
-    According to §§ 8 to 10 TMG, however, we are not obligated to monitor
-    transmitted or stored third-party information or to investigate
-    circumstances that indicate illegal activity.
-  </p>
+      <h2>Haftungsausschluss</h2>
+      <p class="muted">
+        Die Inhalte dieser Seite wurden mit gr&ouml;&szlig;ter Sorgfalt erstellt.
+        F&uuml;r die Richtigkeit, Vollst&auml;ndigkeit und Aktualit&auml;t der
+        Inhalte kann jedoch keine Gew&auml;hr &uuml;bernommen werden. F&uuml;r
+        Inhalte externer Links sind ausschlie&szlig;lich deren Betreiber
+        verantwortlich.
+      </p>
+    </div>
+  </main>
 
-  <h3>Liability for Links</h3>
-  <p>
-    This website contains links to external third-party websites over whose
-    content we have no control. We therefore accept no liability for such
-    external content. The respective provider or operator of the linked pages
-    is always responsible for their content. The linked pages were checked for
-    possible legal violations at the time of linking. No illegal content was
-    identifiable at the time of linking. Permanent monitoring of linked pages
-    is not reasonable without concrete evidence of a legal violation. Upon
-    notification of such violations, we will remove the relevant links immediately.
-  </p>
-  <p>
-    This website links to GitHub for software downloads. The privacy policy
-    and terms of use of GitHub are the responsibility of GitHub, Inc.
-  </p>
-
-  <h3>Copyright</h3>
-  <p>
-    The content and works created by the site operator on these pages are
-    subject to German copyright law. The MT Analyze App is published as
-    open-source software under the Apache License 2.0.
-    The source code is freely available at
-    <a href="https://github.com/centerscout/mtanalyzeapp" target="_blank" rel="noopener">
-      github.com/centerscout/mtanalyzeapp</a>.
-  </p>
-
-  <!-- ════════════════════════════════════ PRIVACY POLICY -->
-  <h2>Privacy Policy</h2>
-
-  <h3>Controller</h3>
-  <p>
-    Centerscout GmbH, Liegnitzer Weg 2c, 64625 Bensheim, Germany<br>
-    Email: <a href="mailto:info@centerscout.de">info@centerscout.de</a>
-  </p>
-
-  <h3>Collection and Storage of Personal Data</h3>
-  <p>
-    This website is delivered as a static HTML page. No personal data is
-    collected, stored or processed by the website itself — except in the
-    cases described below.
-  </p>
-
-  <h3>Contact by Email</h3>
-  <p>
-    If you contact us by email, the data you provide (email address, message
-    content) will be used solely to process your enquiry and will not be
-    passed on to third parties. The legal basis is Art. 6 para. 1 lit. f GDPR
-    (legitimate interest in processing enquiries).
-  </p>
-
-  <h3>Cookies and Tracking</h3>
-  <p>
-    This website uses <strong>no cookies</strong> and no tracking or analytics
-    tools. No usage data is collected or transmitted to third parties.
-  </p>
-
-  <h3>Download via GitHub</h3>
-  <p>
-    The MT Analyze App is downloaded via GitHub. The privacy policy of
-    GitHub, Inc. applies. We have no influence over the data collected there.
-  </p>
-
-  <h3>Your Rights</h3>
-  <p>
-    You have the right to access, rectification, erasure and restriction of
-    processing of your personal data, as well as the right to data portability
-    (Art. 15–20 GDPR). To exercise your rights, contact:
-    <a href="mailto:info@centerscout.de">info@centerscout.de</a>.
-    You also have the right to lodge a complaint with the competent supervisory authority.
-  </p>
-
-</main>
-
-<footer>
-  &copy; 2026 Centerscout GmbH
-</footer>
+  <footer>
+    <div class="nav-inner foot-inner">
+      <div>&copy; 2026 <a href="https://www.centerscout.de">Centerscout GmbH</a></div>
+      <div>
+        <a href="datenschutz.html">Datenschutz</a> &middot;
+        <a href="/">MT Analyze Startseite</a>
+      </div>
+    </div>
+  </footer>
 
 </body>
 </html>

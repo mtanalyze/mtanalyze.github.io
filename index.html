@@ -1,622 +1,840 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MT Analyze — The fast way through a stack of SWIFT MT messages.</title>
-<meta name="description" content="Understand, analyse and test SWIFT MT messages — for migration, change and settlement projects. Local, portable, ISO 15022 SR2025 built-in.">
-<meta name="keywords" content="SWIFT MT, ISO 15022, MT message analysis, SWIFT message viewer, securities settlement, MT 536, MT 540, MT 544, MT 548, MT 940, migration, UAT, T+1, post-trade">
-<meta name="author" content="Centerscout GmbH">
-<meta name="robots" content="index, follow">
-<meta name="theme-color" content="#0f2744">
-<link rel="canonical" href="https://www.mtanalyze.com">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MT Analyze — The fast way through a stack of SWIFT MT messages</title>
+  <meta name="description" content="Open-source desktop tool for analyzing SWIFT MT messages. Load any MT type into one table, see the ISO 15022 meaning of every field, and compare messages side by side.">
+  <meta name="theme-color" content="#0b1220">
 
-<!-- ── Open Graph ─────────────────────────────────────────── -->
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="MT Analyze">
-<meta property="og:title" content="MT Analyze — The fast way through a stack of SWIFT MT messages.">
-<meta property="og:description" content="Understand, analyse and test SWIFT MT messages — for migration, change and settlement projects. Local, portable, ISO 15022 SR2025 built-in.">
-<meta property="og:url" content="https://www.mtanalyze.com">
-<meta property="og:image" content="https://www.mtanalyze.com/images/gui.png">
-<meta property="og:image:alt" content="MT Analyze — SWIFT MT messages in one decoded table">
-<meta property="og:locale" content="en">
+  <meta property="og:title" content="MT Analyze">
+  <meta property="og:description" content="The fast way through a stack of SWIFT MT messages.">
+  <meta property="og:image" content="https://mtanalyze.com/gui.gif">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mtanalyze.com">
+  <meta name="twitter:card" content="summary_large_image">
 
-<!-- ── Twitter Card ───────────────────────────────────────── -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MT Analyze — The fast way through a stack of SWIFT MT messages.">
-<meta name="twitter:description" content="Understand, analyse and test SWIFT MT messages — for migration, change and settlement projects. Local, portable, ISO 15022 SR2025 built-in.">
-<meta name="twitter:image" content="https://www.mtanalyze.com/images/gui.png">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b1220'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Inter,Arial' font-size='34' font-weight='700' fill='%2378b6ff' dominant-baseline='middle'%3EM%3C/text%3E%3C/svg%3E">
+  <link rel="alternate" type="application/atom+xml" title="MT Analyze releases" href="https://github.com/mtanalyze/mtanalyze/releases.atom">
 
-<!-- ── Structured data ────────────────────────────────────── -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "MT Analyze",
-  "applicationCategory": "BusinessApplication",
-  "operatingSystem": "Windows, macOS, Linux",
-  "url": "https://www.mtanalyze.com",
-  "description": "Open-source desktop tool for analysing SWIFT MT messages — mix any MT type in one table, decode ISO 15022 in place, and trace a transaction across all agents.",
-  "license": "https://www.apache.org/licenses/LICENSE-2.0",
-  "softwareRequirements": "Java 17+",
-  "offers": {
-    "@type": "Offer",
-    "price": "0",
-    "priceCurrency": "EUR"
-  },
-  "author": {
-    "@type": "Organization",
-    "name": "Centerscout GmbH",
-    "url": "https://www.centerscout.de"
-  }
-}
-</script>
-<style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-elev: #111a2e;
+      --fg: #e7edf7;
+      --fg-muted: #9aa6bd;
+      --accent: #78b6ff;
+      --accent-strong: #4f9bff;
+      --border: #1f2a44;
+      --max: 1100px;
+    }
 
-  :root {
-    --navy:   #0f2744;
-    --navy2:  #1a3a5c;
-    --blue:   #2563eb;
-    --blue2:  #1d4ed8;
-    --sky:    #e0eeff;
-    --accent: #f59e0b;
-    --text:   #1e293b;
-    --muted:  #64748b;
-    --border: #e2e8f0;
-    --bg:     #f8fafc;
-  }
+    * { box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
 
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    color: var(--text);
-    background: #fff;
-    line-height: 1.6;
-  }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-strong); text-decoration: underline; }
 
-  a { color: var(--blue); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+    .container {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
 
-  /* ── Nav ────────────────────────────────────────────────── */
-  nav {
-    position: sticky; top: 0; z-index: 100;
-    background: var(--navy);
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 2rem; height: 56px;
-    box-shadow: 0 2px 8px rgba(0,0,0,.35);
-  }
-  .nav-logo {
-    color: #fff; font-weight: 700; font-size: 1rem; letter-spacing: .02em;
-  }
-  .nav-logo span { color: var(--accent); }
-  .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-  .nav-links a { color: #cbd5e1; font-size: .875rem; }
-  .nav-links a:hover { color: #fff; text-decoration: none; }
-  .nav-cta {
-    background: var(--blue); color: #fff !important;
-    padding: .35rem .9rem; border-radius: 6px; font-size: .875rem; font-weight: 600;
-    transition: background .15s;
-  }
-  .nav-cta:hover { background: var(--blue2) !important; text-decoration: none !important; }
+    /* ------- nav ------- */
+    header.nav {
+      padding: 22px 0;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: rgba(11, 18, 32, 0.85);
+      backdrop-filter: blur(10px);
+      z-index: 10;
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--fg);
+      letter-spacing: -0.01em;
+    }
+    .brand:hover { text-decoration: none; }
+    .brand-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, #1a2a4d, #0b1220);
+      border: 1px solid var(--border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .nav-links { display: flex; gap: 22px; align-items: center; }
+    .nav-links a { color: var(--fg-muted); font-size: 15px; }
+    .nav-links a:hover { color: var(--fg); text-decoration: none; }
 
-  /* ── Hero ───────────────────────────────────────────────── */
-  .hero {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 60%, #1e4080 100%);
-    padding: 5rem 2rem 4rem;
-    text-align: center;
-    color: #fff;
-  }
-  .hero-badge {
-    display: inline-block;
-    background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.25);
-    color: #e0eeff; font-size: .8rem; font-weight: 600; letter-spacing: .06em;
-    text-transform: uppercase; padding: .3rem .8rem; border-radius: 999px;
-    margin-bottom: 1.5rem;
-  }
-  .hero h1 {
-    font-size: clamp(1.9rem, 4vw, 3.2rem);
-    font-weight: 800; line-height: 1.15;
-    max-width: 820px; margin: 0 auto .75rem;
-  }
-  .hero h1 em { color: var(--accent); font-style: normal; }
-  .hero-sub {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: #94afd6; max-width: 660px; margin: 0 auto 2.5rem;
-  }
-  .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 3.5rem; }
-  .btn-primary {
-    background: var(--blue); color: #fff;
-    padding: .75rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: 1rem;
-    transition: background .15s, transform .1s;
-    display: inline-flex; align-items: center; gap: .5rem;
-  }
-  .btn-primary:hover { background: var(--blue2); text-decoration: none; transform: translateY(-1px); }
-  .btn-secondary {
-    background: rgba(255,255,255,.1); color: #fff; border: 1px solid rgba(255,255,255,.3);
-    padding: .75rem 1.75rem; border-radius: 8px; font-weight: 600; font-size: 1rem;
-    transition: background .15s;
-  }
-  .btn-secondary:hover { background: rgba(255,255,255,.18); text-decoration: none; }
+    /* ------- hero ------- */
+    .hero {
+      padding: 96px 0 56px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 5.5vw, 60px);
+      line-height: 1.08;
+      margin: 0 0 20px;
+      letter-spacing: -0.025em;
+      font-weight: 800;
+    }
+    .hero h1 .accent {
+      background: linear-gradient(90deg, #78b6ff, #b794ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p.tagline {
+      font-size: clamp(17px, 2vw, 21px);
+      color: var(--fg-muted);
+      max-width: 720px;
+      margin: 0 auto 36px;
+    }
 
-  .hero-note { color: #7090b8; font-size: .82rem; margin-top: -1.5rem; margin-bottom: 2rem; }
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      border: 1px solid transparent;
+      transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #07101f;
+    }
+    .btn-primary:hover { background: #95c5ff; color: #07101f; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--fg);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--fg); }
 
-  .screenshot-wrap {
-    max-width: 900px; margin: 0 auto;
-    border-radius: 12px; overflow: hidden;
-    box-shadow: 0 24px 80px rgba(0,0,0,.55);
-    border: 1px solid rgba(255,255,255,.1);
-    position: relative;
-  }
-  .screenshot-wrap img { display: block; width: 100%; height: auto; }
-  .screenshot-wrap .gif-loading {
-    position: absolute; bottom: .75rem; right: .75rem;
-    background: rgba(0,0,0,.55); color: #fff;
-    font-size: .75rem; font-weight: 600; padding: .3rem .65rem;
-    border-radius: 999px; pointer-events: none;
-    display: flex; align-items: center; gap: .4rem;
-  }
-  .screenshot-wrap .gif-loading::before {
-    content: "";
-    display: inline-block; width: 10px; height: 10px;
-    border: 2px solid rgba(255,255,255,.4); border-top-color: #fff;
-    border-radius: 50%; animation: spin .8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
+    .meta {
+      color: var(--fg-muted);
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .meta code {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 13px;
+      color: var(--accent);
+    }
 
-  /* ── Problem block ──────────────────────────────────────── */
-  .problem {
-    background: #fffbeb; border-top: 3px solid var(--accent);
-    padding: 3rem 2rem;
-  }
-  .problem-inner {
-    max-width: 860px; margin: 0 auto;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem;
-  }
-  .problem h2 {
-    grid-column: 1 / -1;
-    font-size: 1.4rem; font-weight: 800; color: var(--navy); margin-bottom: .25rem;
-  }
-  .problem-lead {
-    grid-column: 1 / -1;
-    color: var(--muted); font-size: .95rem; margin-bottom: .5rem;
-  }
-  .pain-item { display: flex; gap: .75rem; align-items: flex-start; }
-  .pain-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: .1rem; }
-  .problem-hook {
-    grid-column: 1 / -1;
-    font-size: 1rem; color: var(--navy);
-    border-left: 3px solid var(--accent); padding-left: .75rem;
-    margin-bottom: .25rem; font-style: italic;
-  }
-  .problem-hook strong { font-style: normal; }
-  .pain-item h4 { font-size: .9rem; font-weight: 700; color: var(--navy); }
-  .pain-item p  { font-size: .83rem; color: var(--muted); margin-top: .2rem; }
+    /* ------- tenets / differentiators ------- */
+    .tenets-section {
+      padding: 32px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .tenets-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .tenet {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tenet svg {
+      width: 26px;
+      height: 26px;
+      color: var(--accent);
+    }
+    .tenet h3 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--fg);
+      font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+    .tenet p {
+      margin: 0;
+      color: var(--fg-muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    @media (max-width: 900px) {
+      .tenets-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    }
+    @media (max-width: 520px) {
+      .tenets-grid { grid-template-columns: 1fr; }
+    }
 
-  /* ── Section base ───────────────────────────────────────── */
-  section { padding: 4.5rem 2rem; }
-  .container { max-width: 1060px; margin: 0 auto; }
-  .section-label {
-    font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--blue); margin-bottom: .5rem;
-  }
-  .section-title {
-    font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 800;
-    color: var(--navy); margin-bottom: .75rem;
-  }
-  .section-sub { color: var(--muted); max-width: 620px; font-size: 1rem; }
+    /* ------- screenshot ------- */
+    .showcase {
+      padding: 24px 0 80px;
+    }
+    .showcase-frame {
+      max-width: 980px;
+      margin: 0 auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--bg-elev);
+      padding: 8px;
+      box-shadow:
+        0 30px 80px -30px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(120, 182, 255, 0.06);
+      overflow: hidden;
+    }
+    .showcase-frame img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+    .inputs {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .input-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      font-size: 14px;
+    }
+    .input-chip svg { color: var(--accent); flex-shrink: 0; }
+    .inputs-caption {
+      text-align: center;
+      color: var(--fg-muted);
+      font-size: 14px;
+      margin-top: 14px;
+    }
 
-  /* ── USP strip ──────────────────────────────────────────── */
-  .usp-strip { background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-  .usp-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-  .usp-card {
-    background: #fff; border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.5rem 1.25rem;
-    box-shadow: 0 1px 4px rgba(0,0,0,.05);
-  }
-  .usp-icon { font-size: 1.6rem; margin-bottom: .6rem; }
-  .usp-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .35rem; }
-  .usp-card p { font-size: .85rem; color: var(--muted); line-height: 1.5; }
+    /* ------- pitch strip ------- */
+    .pitch {
+      padding: 0 0 96px;
+    }
+    .pitch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .pitch-item h3 {
+      font-size: 16px;
+      margin: 0 0 6px;
+      color: var(--fg);
+      letter-spacing: -0.005em;
+    }
+    .pitch-item p {
+      margin: 0;
+      color: var(--fg-muted);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .pitch-item strong { color: var(--fg); font-weight: 600; }
+    .pitch-item code {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+    @media (max-width: 720px) {
+      .hero { padding-top: 64px; }
+      .pitch-grid { grid-template-columns: 1fr; gap: 22px; }
+      .nav-links a:not(.gh) { display: none; }
+    }
 
-  /* ── How it works ───────────────────────────────────────── */
-  .how-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0; margin-top: 3rem; counter-reset: step;
-  }
-  .how-step {
-    padding: 2rem 1.75rem; border: 1px solid var(--border);
-    position: relative; background: #fff;
-  }
-  .how-step:not(:last-child) { border-right: none; }
-  .how-step::before {
-    counter-increment: step;
-    content: counter(step);
-    display: block;
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--navy); color: #fff;
-    font-weight: 800; font-size: .95rem;
-    display: flex; align-items: center; justify-content: center;
-    margin-bottom: 1rem;
-  }
-  .how-step h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: .4rem; }
-  .how-step p  { font-size: .85rem; color: var(--muted); }
+    /* ------- single quote ------- */
+    .quote-section {
+      padding: 8px 0 88px;
+    }
+    .quote {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+    }
+    .quote::before {
+      content: "\201C";
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--accent);
+      opacity: 0.35;
+      margin-bottom: -12px;
+    }
+    .quote blockquote {
+      margin: 0;
+      padding: 0;
+      font-size: clamp(19px, 2.3vw, 24px);
+      line-height: 1.45;
+      color: var(--fg);
+      font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+    .quote cite {
+      display: block;
+      margin-top: 18px;
+      color: var(--fg-muted);
+      font-size: 14px;
+      font-style: normal;
+      letter-spacing: 0.02em;
+    }
 
-  /* ── Features ───────────────────────────────────────────── */
-  .features-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; margin-top: 3rem;
-  }
-  .feature-card {
-    border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem;
-    transition: box-shadow .15s, border-color .15s;
-  }
-  .feature-card:hover { box-shadow: 0 4px 20px rgba(37,99,235,.1); border-color: #93c5fd; }
-  .feature-card h3 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: .5rem; }
-  .feature-card p { font-size: .875rem; color: var(--muted); }
-  .feature-tag {
-    display: inline-block; background: var(--sky); color: var(--blue);
-    font-size: .72rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
-    padding: .15rem .5rem; border-radius: 4px; margin-bottom: .6rem;
-  }
+    /* ------- reference tables (expression / mt types) ------- */
+    .ref-section {
+      padding: 0 0 96px;
+    }
+    .ref-section h2 {
+      font-size: clamp(24px, 3vw, 30px);
+      margin: 0 0 8px;
+      letter-spacing: -0.015em;
+      font-weight: 700;
+    }
+    .ref-lead {
+      color: var(--fg-muted);
+      margin: 0 0 28px;
+      font-size: 16px;
+    }
+    .ref-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-elev);
+    }
+    table.ref-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+    .ref-table th,
+    .ref-table td {
+      text-align: left;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .ref-table tr:last-child td { border-bottom: none; }
+    .ref-table th {
+      background: rgba(120, 182, 255, 0.04);
+      color: var(--fg);
+      font-weight: 600;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .ref-table td code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 2px 8px;
+      font-size: 13px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    .ref-table td .or { color: var(--fg-muted); margin: 0 6px; font-size: 13px; }
+    .ref-note {
+      margin: 18px 2px 0;
+      color: var(--fg-muted);
+      font-size: 14px;
+    }
 
-  /* ── Use-cases / Migration scenarios ───────────────────── */
-  .usecases { background: var(--navy); color: #fff; }
-  .usecases .section-title { color: #fff; }
-  .usecases .section-sub { color: #94afd6; }
-  .uc-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1rem; margin-top: 2.5rem;
-  }
-  .uc-card {
-    background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
-    border-radius: 10px; padding: 1.5rem;
-  }
-  .uc-phase {
-    font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: .4rem;
-  }
-  .uc-card h4 { font-size: .95rem; font-weight: 700; color: #e0eeff; margin-bottom: .4rem; }
-  .uc-card p { font-size: .82rem; color: #7090b8; }
-  /* ── Quote ──────────────────────────────────────────────── */
-  .quote-block {
-    background: var(--sky); border-left: 4px solid var(--blue);
-    padding: 2rem 2.5rem; border-radius: 0 10px 10px 0;
-    max-width: 760px; margin: 3rem auto 0;
-  }
-  .quote-block blockquote {
-    font-size: 1.1rem; font-style: italic; color: var(--navy2); line-height: 1.65;
-  }
-  .quote-block cite { display: block; margin-top: .75rem; font-size: .82rem; color: var(--muted); font-style: normal; }
+    .expr-table td:first-child { width: 38%; white-space: nowrap; }
 
-  /* ── Security ───────────────────────────────────────────── */
-  .security { background: var(--bg); }
-  .compliance-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem; margin-top: 2.5rem;
-  }
-  .compliance-item {
-    display: flex; gap: 1rem; align-items: flex-start;
-    background: #fff; border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.25rem;
-  }
-  .compliance-check {
-    width: 32px; height: 32px; flex-shrink: 0;
-    background: #dcfce7; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: .9rem;
-  }
-  .compliance-item h4 { font-size: .9rem; font-weight: 700; color: var(--navy); }
-  .compliance-item p { font-size: .82rem; color: var(--muted); margin-top: .2rem; }
+    .types-table td:first-child { width: 80px; white-space: nowrap; font-weight: 600; color: var(--fg); }
+    .types-table td:nth-child(3) { color: var(--fg-muted); width: 36%; }
+    .types-table tr.section-head td {
+      background: rgba(120, 182, 255, 0.05);
+      color: var(--fg-muted);
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding-top: 14px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
 
-  /* ── Compare table ──────────────────────────────────────── */
-  .compare table {
-    width: 100%; border-collapse: collapse; margin-top: 2.5rem;
-    font-size: .9rem;
-  }
-  .compare th {
-    background: var(--navy); color: #fff; padding: .75rem 1rem; text-align: left;
-    font-weight: 700;
-  }
-  .compare th:first-child { border-radius: 8px 0 0 0; }
-  .compare th:last-child  { border-radius: 0 8px 0 0; }
-  .compare td { padding: .7rem 1rem; border-bottom: 1px solid var(--border); }
-  .compare tr:last-child td { border-bottom: none; }
-  .compare tr:nth-child(even) td { background: var(--bg); }
-  .compare .col-community { color: var(--muted); }
-  .compare .col-enterprise { color: #15803d; font-weight: 600; }
-  .badge-community {
-    background: #f1f5f9; color: var(--muted);
-    font-size: .75rem; font-weight: 700; padding: .15rem .5rem; border-radius: 4px;
-  }
-  .badge-enterprise {
-    background: #dcfce7; color: #15803d;
-    font-size: .75rem; font-weight: 700; padding: .15rem .5rem; border-radius: 4px;
-  }
+    @media (max-width: 720px) {
+      .ref-table th, .ref-table td { padding: 10px 12px; }
+      .expr-table td:first-child,
+      .types-table td:first-child { width: auto; white-space: normal; }
+      .types-table td:nth-child(3) { width: auto; }
+    }
 
-  /* ── Pricing ────────────────────────────────────────────── */
-  .pricing-grid {
-    display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1.25rem; margin-top: 2.5rem;
-  }
-  .price-card {
-    border: 1px solid var(--border); border-radius: 12px; padding: 1.75rem 1.5rem;
-    background: #fff;
-  }
-  .price-card.highlight {
-    border-color: var(--blue); box-shadow: 0 0 0 2px rgba(37,99,235,.15);
-  }
-  .price-label {
-    font-size: .75rem; font-weight: 700; text-transform: uppercase;
-    letter-spacing: .08em; color: var(--muted); margin-bottom: .5rem;
-  }
-  .price-card.highlight .price-label { color: var(--blue); }
-  .price-title { font-size: 1.1rem; font-weight: 800; color: var(--navy); margin-bottom: .25rem; }
-  .price-amount { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin-bottom: .25rem; }
-  .price-amount span { font-size: .9rem; font-weight: 500; color: var(--muted); }
-  .price-note { font-size: .8rem; color: var(--muted); margin-bottom: 1rem; }
-  .price-features { list-style: none; display: flex; flex-direction: column; gap: .4rem; }
-  .price-features li { font-size: .85rem; color: var(--text); display: flex; gap: .5rem; }
-  .price-features li::before { content: "✓"; color: #16a34a; font-weight: 700; flex-shrink: 0; }
+    /* ------- quality & security ------- */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .check-item {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
+    .check-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      background: rgba(120, 182, 255, 0.10);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+    .check-item h3 {
+      font-size: 16px;
+      margin: 0 0 6px;
+      color: var(--fg);
+      font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+    .check-item p {
+      margin: 0;
+      color: var(--fg-muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .check-item code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 12px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    @media (max-width: 720px) {
+      .check-grid { grid-template-columns: 1fr; }
+    }
 
-  /* ── Entry barrier block ───  ────────────────────────────── */
-  .entry-block { background: var(--sky); }
-  .entry-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; margin-top: 2rem;
-  }
-  .entry-item {
-    background: #fff; border-radius: 10px;
-    padding: 1.5rem; border-top: 3px solid var(--blue);
-  }
-  .entry-item strong {
-    display: block; font-size: .85rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: .08em;
-    color: var(--blue); margin-bottom: .5rem;
-  }
-  .entry-item p { font-size: .9rem; color: var(--text); margin: 0; }
-  @media (max-width: 640px) {
-    .entry-grid { grid-template-columns: 1fr; }
-  }
+    /* ------- footer ------- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0 48px;
+      color: var(--fg-muted);
+      font-size: 13px;
+    }
+    .foot-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .foot-inner a { color: var(--fg-muted); }
+    .foot-inner a:hover { color: var(--fg); }
+    .foot-links { display: inline-flex; align-items: center; gap: 10px; }
+    .foot-sep { color: var(--border); }
 
-  /* ── CTA block ──────────────────────────────────────────── */
-  .cta-block {
-    background: linear-gradient(135deg, var(--blue) 0%, var(--navy2) 100%);
-    text-align: center; color: #fff;
-  }
-  .cta-block h2 { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 800; margin-bottom: .75rem; }
-  .cta-block p { color: #93c5fd; margin-bottom: 2rem; font-size: 1rem; }
-  .cta-requirements {
-    display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap;
-    margin-top: 1.5rem; color: #93c5fd; font-size: .85rem;
-  }
-  .cta-requirements span::before { content: "✓ "; color: #86efac; }
-
-  /* ── Footer ─────────────────────────────────────────────── */
-  footer {
-    background: var(--navy); color: #94afd6;
-    padding: 2.5rem 2rem; text-align: center; font-size: .875rem;
-  }
-  footer strong { color: #e0eeff; }
-  footer a { color: #93c5fd; }
-  footer a:hover { color: #fff; }
-  .footer-links { display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1rem; }
-
-  @media (max-width: 700px) {
-    nav { padding: 0 1rem; }
-    .nav-links { display: none; }
-    section { padding: 3rem 1.25rem; }
-    .hero { padding: 3.5rem 1.25rem 3rem; }
-    .problem-inner { grid-template-columns: 1fr; }
-    .usp-grid { grid-template-columns: 1fr; }
-    .features-grid { grid-template-columns: 1fr; }
-    .how-step:not(:last-child) { border-right: 1px solid var(--border); border-bottom: none; }
-    .how-grid { grid-template-columns: 1fr; }
-  }
-</style>
+    .trademark {
+      max-width: 620px;
+      margin-top: 18px;
+      font-size: 12px;
+      line-height: 1.5;
+      color: #6b7794;
+    }
+  </style>
 </head>
 <body>
 
-<!-- ══ Nav ══════════════════════════════════════════════════ -->
-<nav>
-  <div class="nav-logo">MT&nbsp;<span>Analyze</span></div>
-  <div class="nav-links">
-    <a href="#problem">The Problem</a>
-    <a href="#migration">Migration</a>
-    <a href="https://github.com/mtanalyze/mtanalyze" target="_blank" rel="noopener">GitHub</a>
-    <a class="nav-cta" href="https://github.com/mtanalyze/mtanalyze/releases/latest" target="_blank" rel="noopener">Download</a>
-  </div>
-</nav>
-
-<!-- ══ Hero ═════════════════════════════════════════════════ -->
-<section class="hero">
-  <div class="hero-badge">Settlement · SWIFT MT</div>
-  <h1>The <em>fast way</em> through a stack of SWIFT MT messages.</h1>
-  <p class="hero-sub">
-    An open-source desktop tool for analysing SWIFT MT messages. Mix any MT type in one table, decode ISO 15022 in place, and trace a transaction across all agents. Built by a practitioner — for analysis and UAT work in banks.
-  </p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="https://github.com/mtanalyze/mtanalyze/releases/latest">
-      &#8659; Download (JAR)
-    </a>
-    <a class="btn-secondary" href="https://github.com/mtanalyze/mtanalyze" target="_blank" rel="noopener">View on GitHub</a>
-  </div>
-  <p class="hero-note">Java 17+ · Windows · macOS · Linux · VDI · Portable App · No Installation · GitHub · Maven Central · Nexus</p>
-  <p class="hero-note">Download the JAR and double-click to start. If that doesn't work: <code style="background:rgba(255,255,255,.1);padding:.1rem .4rem;border-radius:4px;">javaw -jar MT-Analyze-&lt;version&gt;.jar</code></p>
-  <div class="screenshot-wrap">
-    <img id="demo-img" src="images/gui.png" alt="MT Analyze in action — screen recording">
-    <span class="gif-loading" id="gif-badge">Loading demo…</span>
-  </div>
-  <script>
-    (function () {
-      const img = document.getElementById('demo-img');
-      const badge = document.getElementById('gif-badge');
-      const gif = new Image();
-      gif.onload = function () {
-        img.src = gif.src;
-        badge.remove();
-      };
-      gif.src = 'images/gui.gif';
-    })();
-  </script>
-</section>
-
-<!-- ══ Problem ══════════════════════════════════════════════ -->
-<div class="problem" id="problem">
-  <div class="problem-inner">
-    <p class="problem-hook"><strong>SWIFT MT is old. Nobody wants to work with it. But the entire settlement infrastructure runs on it.</strong> So here you are — in a T+1 or migration project, tracing thousands of messages from legacy and COTS systems with nothing but basic tools. Finding the needle in the haystack.</p>
-    <h2>Archaeology of settlement processes — the bottleneck in every project.</h2>
-    <p class="problem-lead">
-      Manually analysing and testing SWIFT messages takes days.
-      It slows the project, increases risk, and delays completion.
-    </p>
-    <div class="pain-item">
-      <div class="pain-icon">🏛️</div>
-      <div>
-        <h4>SWIFT tags are like hieroglyphics</h4>
-        <p>Tags, qualifiers and codes all have to be looked up in the SWIFT spec. Without tools, every interpretation costs time.</p>
-      </div>
-    </div>
-    <div class="pain-item">
-      <div class="pain-icon">🔀</div>
-      <div>
-        <h4>One transaction, many lifecycle actions — no tool to link them</h4>
-        <p>Instruction, matching status, confirmation, statement, cash posting — each a different message type, in a separate log. Linking them back to one transaction by hand is barely possible.</p>
-      </div>
-    </div>
-    <div class="pain-item">
-      <div class="pain-icon">📊</div>
-      <div>
-        <h4>Excel comparisons miss fields</h4>
-        <p>Manual target/actual comparison doesn't capture all fields. Deviations only become visible at go-live — too late.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ══ How it works ═════════════════════════════════════════ -->
-<section>
-  <div class="container">
-    <p class="section-label">How the solution works</p>
-    <h2 class="section-title">What takes days — done in hours.</h2>
-    <p class="section-sub">How MT Analyze eliminates the analysis and testing bottleneck — step by step.</p>
-    <div class="how-grid">
-      <div class="how-step">
-        <h3>Get an overview</h3>
-        <p>Load data and get a structured table at once — all fields decoded, all sources harmonised. Even Block-4 examples from the Clearstream SWIFT guides are enough to start; the app generates the header. No live system needed.</p>
-      </div>
-      <div class="how-step">
-        <h3>Explore and test</h3>
-        <p>Set filters, show and hide columns, sort — interactively and without preparation. Try out hypotheses on the spot.</p>
-      </div>
-      <div class="how-step">
-        <h3>Drill down</h3>
-        <p>Dive into individual messages, chains or diffs. Tags, qualifiers, components with descriptions — the content becomes understandable.</p>
-      </div>
-      <div class="how-step">
-        <h3>Export and continue</h3>
-        <p>Everything copyable to Excel. Export diffs as CSV. The next step in the project starts without detour.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ Migration Use Cases ═══════════════════════════════════ -->
-<section class="usecases" id="migration">
-  <div class="container">
-    <p class="section-label">Three triggers. Always the same bottleneck.</p>
-    <h2 class="section-title">Regulatory Change. System Replacement. Carve-out.</h2>
-    <p class="section-sub">A legacy system receives a regulatory requirement. A legacy system is to be replaced. A business unit is sold. In all three scenarios, SWIFT messages and bookings must be fully traced. Understand the old first, then check the new against it — both with one tool.</p>
-    <div class="uc-grid">
-      <div class="uc-card">
-        <div class="uc-phase">Analysis</div>
-        <h4>Capture legacy system behaviour completely</h4>
-        <p>What does the legacy system really send — including edge cases? Load production messages, filter, evaluate systematically. No gaps in documentation.</p>
-      </div>
-      <div class="uc-card">
-        <div class="uc-phase">Test Data</div>
-        <h4>Assemble relevant cases quickly</h4>
-        <p>From thousands of production messages, filter the relevant edge cases in minutes and export as a test set.</p>
-      </div>
-      <div class="uc-card">
-        <div class="uc-phase">UAT</div>
-        <h4>Exhaustive diff — no field missed</h4>
-        <p>Legacy against new system at field level. Deviations immediately visible. Structured export as a verifiable audit trail.</p>
-      </div>
-      <div class="uc-card">
-        <div class="uc-phase">Go-Live</div>
-        <h4>Detect deviations immediately</h4>
-        <p>Check the first real messages of the new system against the baseline. Find breaks before escalation.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ══ About ═════════════════════════════════════════════════ -->
-<section>
-  <div class="container">
-    <p class="section-label">Who's behind it</p>
-    <h2 class="section-title">Built by practitioners — for practitioners.</h2>
-    <p class="section-sub" style="max-width:760px;">
-      Centerscout is a small IT consulting firm near Frankfurt, founded in 2009.
-      Over 25 years in IT — starting in Java and EAI, the last 15+ as a securities
-      business analyst at Frankfurt banks. Deep technical and domain expertise in
-      securities settlement, with SWIFT MT at the centre of the work.
-    </p>
-    <div style="display:flex; flex-wrap:wrap; gap:.6rem; margin-top:2rem;">
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">Securities Operations</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">SecFin</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">Regulatory Reporting</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">New Issuances</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">Cloud Migration</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">System Replacement</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">Carve-out</span>
-      <span style="background:var(--sky);color:var(--blue);font-size:.8rem;font-weight:700;padding:.3rem .75rem;border-radius:999px;">PMI</span>
-    </div>
-  </div>
-</section>
-
-<!-- ══ CTA Block ═════════════════════════════════════════════ -->
-<section class="cta-block">
-  <div class="container">
-    <h2>Eliminate the analysis and testing bottleneck in your project.</h2>
-    <p>Download the single JAR — deploy in the project today, miss nothing.</p>
-    <div class="hero-actions">
-      <a class="btn-primary" href="https://github.com/mtanalyze/mtanalyze/releases/latest">
-        &#8659; Download Now
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="brand">
+        <span class="brand-mark">M</span>
+        <span>MT Analyze</span>
       </a>
-      <a class="btn-secondary" href="https://github.com/mtanalyze/mtanalyze" target="_blank" rel="noopener">View on GitHub</a>
+      <nav class="nav-links">
+        <a href="https://github.com/mtanalyze/mtanalyze#readme">Docs</a>
+        <a href="https://central.sonatype.com/artifact/com.mtanalyze/mtanalyze">Maven Central</a>
+        <a class="gh" href="https://github.com/mtanalyze/mtanalyze">GitHub</a>
+      </nav>
     </div>
-    <p style="margin-top:2rem; font-size:.82rem; color:#93c5fd;">
-      Bug? <a href="https://github.com/mtanalyze/mtanalyze/issues" target="_blank" rel="noopener" style="color:#bfdbfe;">Open a GitHub Issue.</a>
-      Custom extensions or project support: <a href="mailto:info@mtanalyze.com" style="color:#bfdbfe;">info@mtanalyze.com</a>.
-    </p>
-  </div>
-</section>
+  </header>
 
-<!-- ══ Footer ════════════════════════════════════════════════ -->
-<footer>
-  <div class="footer-links">
-    <a href="https://github.com/mtanalyze/mtanalyze" target="_blank" rel="noopener">GitHub</a>
-    <a href="https://github.com/mtanalyze/mtanalyze/issues" target="_blank" rel="noopener">Issues</a>
-    <a href="https://github.com/mtanalyze/mtanalyze/releases/latest" target="_blank" rel="noopener">Download</a>
-    <a href="https://central.sonatype.com/artifact/com.mtanalyze/mtanalyze" target="_blank" rel="noopener">Maven Central</a>
-    <a href="mailto:info@mtanalyze.com">Contact</a>
-    <a href="impressum.html">Imprint</a>
-  </div>
-  <p style="font-size:.78rem; color:#4a6080;">
-    &copy; 2026 <a href="https://www.centerscout.de" target="_blank" rel="noopener" style="color:#4a6080;">Centerscout GmbH</a> · Apache License 2.0 ·
-    <a href="https://www.mtanalyze.com" style="color:#4a6080;">www.mtanalyze.com</a>
-  </p>
-  <p style="font-size:.72rem; color:#3a5070; margin-top:.6rem; max-width:760px; margin-left:auto; margin-right:auto;">
-    SWIFT is a trademark of S.W.I.F.T. SCRL; ISO 15022 is an ISO standard. MT Analyze is an independent open-source project, not affiliated with or endorsed by either.
-  </p>
-</footer>
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>The fast way through a stack of <span class="accent">SWIFT MT messages</span>.</h1>
+        <p class="tagline">
+          Open-source desktop tool for everyone working with SWIFT MT messages in banks &mdash;
+          day-to-day analysis, operations, reconciliation, audit and project work alike.
+          Load any mix of MT files into one harmonized entries table, read the ISO 15022 meaning
+          of every field, and compare messages side by side.
+        </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/mtanalyze/mtanalyze/releases/latest">
+            Download latest release
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12"/><path d="m6 9 6 6 6-6"/><path d="M5 21h14"/>
+            </svg>
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/mtanalyze/mtanalyze">
+            View on GitHub
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.96 10.96 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56C20.71 21.38 24 17.07 24 12 24 5.65 18.85.5 12 .5Z"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="meta">
+          Single self-contained JAR &middot; requires <code>Java 17+</code> &middot; no installation, no admin rights
+        </p>
+      </div>
+    </section>
+
+    <section class="tenets-section">
+      <div class="container">
+        <ul class="tenets-grid">
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/>
+              <path d="M18 16l.8 2.2L21 19l-2.2.8L18 22l-.8-2.2L15 19l2.2-.8z"/>
+            </svg>
+            <h3>Simplicity</h3>
+            <p>One window, one table, one click to detail. Validated by early users at a Swiss tier-1 bank.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="8" width="10" height="10" rx="1.5"/>
+              <rect x="11" y="4" width="10" height="10" rx="1.5"/>
+            </svg>
+            <h3>No unnecessary dependencies</h3>
+            <p>Two libraries: <a href="https://github.com/prowide/prowide-core">Prowide Core</a> for parsing, <a href="https://github.com/JFormDesigner/FlatLaf">FlatLaf</a> for the UI. Nothing else in the JAR.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/>
+              <path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/>
+            </svg>
+            <h3>ISO 15022 native</h3>
+            <p>The SR2025 Data Field Dictionary is bundled into the JAR &mdash; no lookups, no online calls, full descriptions out of the box.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+            <h3>No data leakage</h3>
+            <p>Pure desktop &mdash; no server, no SaaS, no upload of bank data. The &ldquo;no outbound network calls&rdquo; build check makes the promise enforced, not just stated.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="showcase">
+      <div class="container">
+        <div class="showcase-frame">
+          <img src="gui.gif" alt="MT Analyze main window showing the entries table, tag view and diff view">
+        </div>
+
+        <div class="inputs" aria-label="Ways to load SWIFT MT data">
+          <span class="input-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+              <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/>
+              <path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>
+            </svg>
+            Drag &amp; drop a file
+          </span>
+          <span class="input-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="8" y="3" width="8" height="4" rx="1"/>
+              <path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/>
+            </svg>
+            Paste an MT snippet
+          </span>
+          <span class="input-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 5v14"/><path d="M5 12h14"/>
+            </svg>
+            Import file
+          </span>
+        </div>
+        <p class="inputs-caption">Drop, paste or import &mdash; every MT lands in the same entries table.</p>
+      </div>
+    </section>
+
+    <section class="pitch">
+      <div class="container">
+        <div class="pitch-grid">
+          <div class="pitch-item">
+            <h3>One harmonized entries table</h3>
+            <p>Drop in any number of files with mixed MT types. Statements (535, 536, 940, 950) become one row per entry; simpler MTs a single row &mdash; all sortable, filterable and bookmarkable in one view.</p>
+          </div>
+          <div class="pitch-item">
+            <h3>Detail view on every row</h3>
+            <p>Click a row for <strong>Tags</strong> (with ISO 15022 descriptions), <strong>Components</strong> and <strong>Source</strong>. Select two or more rows and the <strong>Diff</strong> tab opens automatically with deviating cells highlighted.</p>
+          </div>
+          <div class="pitch-item">
+            <h3>Made for everyday work</h3>
+            <p>Excel-style filters and a quick expression language (<code>=EUR</code>, <code>^DE</code>, <code>!=FREE</code>). Right-click <strong>Copy</strong> on the table or detail view to paste straight into Excel. Persistent notes, bookmarks and <code>.mtd</code> sessions.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-section">
+      <div class="container">
+        <figure class="quote">
+          <blockquote>Looks decent Ralf. I really liked how simplified it is.</blockquote>
+          <cite>&mdash; Process Lead Securities, Swiss tier-1 bank</cite>
+        </figure>
+      </div>
+    </section>
+
+    <section class="ref-section types">
+      <div class="container">
+        <h2>Supported message types</h2>
+        <p class="ref-lead">
+          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade and cash reporting. Files of other MT types still parse via Prowide Core &mdash; if the type can&rsquo;t be detected, you&rsquo;ll be prompted to pick one.
+        </p>
+
+        <div class="ref-wrap">
+          <table class="ref-table types-table">
+            <thead>
+              <tr><th>MT</th><th>Name</th><th>Rows per message</th></tr>
+            </thead>
+            <tbody>
+              <tr class="section-head"><td colspan="3">Securities &mdash; statements (multi-entry)</td></tr>
+              <tr><td>535</td><td>Statement of Holdings</td><td>One per holding (SUBBAL)</td></tr>
+              <tr><td>536</td><td>Statement of Transactions</td><td>One per transaction (TRANSDET)</td></tr>
+              <tr><td>537</td><td>Statement of Pending Transactions</td><td>One per transaction (TRANSDET)</td></tr>
+
+              <tr class="section-head"><td colspan="3">Securities &mdash; settlement instructions &amp; confirmations</td></tr>
+              <tr><td>540</td><td>Receive Free</td><td>One per message</td></tr>
+              <tr><td>541</td><td>Receive Against Payment</td><td>One per message</td></tr>
+              <tr><td>542</td><td>Deliver Free</td><td>One per message</td></tr>
+              <tr><td>543</td><td>Deliver Against Payment</td><td>One per message</td></tr>
+              <tr><td>544</td><td>Receive Free Confirmation</td><td>One per message</td></tr>
+              <tr><td>545</td><td>Receive Against Payment Confirmation</td><td>One per message</td></tr>
+              <tr><td>546</td><td>Deliver Free Confirmation</td><td>One per message</td></tr>
+              <tr><td>547</td><td>Deliver Against Payment Confirmation</td><td>One per message</td></tr>
+              <tr><td>548</td><td>Settlement Status and Processing Advice</td><td>One per message</td></tr>
+
+              <tr class="section-head"><td colspan="3">Triparty collateral</td></tr>
+              <tr><td>527</td><td>Triparty Collateral Instruction</td><td>One per message</td></tr>
+              <tr><td>558</td><td>Triparty Collateral Status and Processing Advice</td><td>One per message</td></tr>
+
+              <tr class="section-head"><td colspan="3">Cash reporting &mdash; statements (multi-entry)</td></tr>
+              <tr><td>940</td><td>Customer Statement Message</td><td>One per statement line (tag :61:)</td></tr>
+              <tr><td>950</td><td>Statement Message</td><td>One per statement line (tag :61:)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="ref-note">
+          Parsing is provided by <a href="https://github.com/prowide/prowide-core">Prowide Core</a> (Apache 2.0).
+        </p>
+      </div>
+    </section>
+
+    <section class="ref-section expr">
+      <div class="container">
+        <h2>Quick Filter expression language</h2>
+        <p class="ref-lead">
+          A row of fields below each column. Type an expression and press <strong>Tab</strong> or
+          <strong>Enter</strong> to apply. Matching is case-insensitive.
+        </p>
+
+        <div class="ref-wrap">
+          <table class="ref-table expr-table">
+            <thead>
+              <tr><th>Expression</th><th>Meaning</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>value</code></td><td>Contains (default)</td></tr>
+              <tr><td><code>=value</code></td><td>Equal</td></tr>
+              <tr><td><code>=</code></td><td>Empty (field has no value)</td></tr>
+              <tr><td><code>!=value</code><span class="or">or</span><code>!value</code><span class="or">or</span><code>&lt;&gt;value</code></td><td>Not equal</td></tr>
+              <tr><td><code>!=</code></td><td>Not empty (field has any value)</td></tr>
+              <tr><td><code>^value</code></td><td>Begins with</td></tr>
+              <tr><td><code>$value</code></td><td>Ends with</td></tr>
+              <tr><td><code>%value</code></td><td>Contains (explicit)</td></tr>
+              <tr><td><code>!^value</code></td><td>Does not begin with</td></tr>
+              <tr><td><code>!%value</code></td><td>Does not contain</td></tr>
+              <tr><td><code>&lt;value</code><span class="or">/</span><code>&gt;value</code></td><td>Less / greater than</td></tr>
+              <tr><td><code>&lt;=value</code><span class="or">/</span><code>&gt;=value</code></td><td>Less / greater or equal</td></tr>
+              <tr><td><code>lo-hi</code></td><td>Between <em>lo</em> and <em>hi</em> (inclusive)</td></tr>
+              <tr><td><code>term1+term2</code></td><td>OR &mdash; matches if any term matches (e.g. <code>=EUR+=USD</code>, <code>^DE+^AT</code>)</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p class="ref-note">
+          Expressions from different columns are combined with <strong>AND</strong> by default; toggle to <strong>OR</strong> in the toolbar. Right-click a Quick Filter field to save the current expressions as a named profile.
+        </p>
+      </div>
+    </section>
+
+    <section class="ref-section quality">
+      <div class="container">
+        <h2>CI/CD &mdash; quality, security &amp; compliance</h2>
+        <p class="ref-lead">
+          The build pipeline, repository setup and licensing enforce guarantees that matter when
+          the tool sits next to production data &mdash; not just developer convenience.
+        </p>
+
+        <div class="check-grid">
+          <div class="check-item">
+            <span class="check-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <h3>No outbound network calls</h3>
+            <p>The build fails if any class touches <code>java.net.Socket</code>, <code>URL.openConnection()</code>, <code>HttpClient</code> or related APIs &mdash; enforced by the <a href="https://github.com/policeman-tools/forbidden-apis">forbidden-apis</a> Maven plugin. MT Analyze cannot phone home, send telemetry, or exfiltrate data. It is a closed loop on your machine.</p>
+          </div>
+
+          <div class="check-item">
+            <span class="check-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9"/>
+                <path d="m8.5 12.5 2.5 2.5 4.5-5"/>
+              </svg>
+            </span>
+            <h3>SonarCloud quality gate</h3>
+            <p>Every change is scanned by <a href="https://sonarcloud.io/summary/overall?id=mtanalyze_mtanalyze">SonarCloud</a> for bugs, vulnerabilities, security hotspots and code smells. Releases are cut only when the gate is green &mdash; the badge in the README reflects the live status.</p>
+          </div>
+
+          <div class="check-item">
+            <span class="check-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <path d="M14 2v6h6"/>
+                <path d="M9 15l2 2 4-4"/>
+              </svg>
+            </span>
+            <h3>Signed Maven Central artifacts</h3>
+            <p>JARs published to <a href="https://central.sonatype.com/artifact/com.mtanalyze/mtanalyze">Maven Central</a> are GPG-signed; the release JAR on GitHub Releases comes from a <a href="https://github.com/mtanalyze/mtanalyze/actions/workflows/release.yml">reproducible Actions workflow</a>. Provenance is verifiable, mirroring into Nexus/Artifactory is straightforward &mdash; and Sonatype&rsquo;s <a href="https://guide.sonatype.com/component/maven/com.mtanalyze:mtanalyze/1.0.2">Component Intelligence</a> tracks independent vulnerability and health data on the published artifact.</p>
+          </div>
+
+          <div class="check-item">
+            <span class="check-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="7"/>
+                <path d="m21 21-4.3-4.3"/>
+                <path d="m8.5 11 2 2 3.5-3.5"/>
+              </svg>
+            </span>
+            <h3>GitHub security scanning</h3>
+            <p><strong>Dependabot</strong> watches the dependency tree for known vulnerabilities and proposes patch PRs &mdash; so transitive issues in Prowide Core, FlatLaf and their downstream libraries get caught early. <strong><a href="https://codeql.github.com/">CodeQL</a></strong> adds semantic SAST for injection, deserialization, path traversal and unsafe reflection &mdash; a second pair of eyes alongside SonarCloud.</p>
+          </div>
+
+          <div class="check-item">
+            <span class="check-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 3h6l4 4v14H5V3z"/>
+                <path d="M15 3v4h4"/>
+                <path d="M8 12h8"/><path d="M8 15h8"/><path d="M8 18h5"/>
+              </svg>
+            </span>
+            <h3>Auditable SBOM</h3>
+            <p>A complete <strong>SPDX SBOM</strong> is generated by GitHub from the <a href="https://github.com/mtanalyze/mtanalyze/network/dependencies">dependency graph</a> and exportable from there. Drop it into your supply-chain review and the full transitive tree &mdash; with licenses and versions &mdash; is on the table.</p>
+          </div>
+
+          <div class="check-item">
+            <span class="check-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3v18"/>
+                <path d="M3 8h18"/>
+                <path d="M7 8 4 14a3 3 0 0 0 6 0z"/>
+                <path d="m17 8-3 6a3 3 0 0 0 6 0z"/>
+                <path d="M8 21h8"/>
+              </svg>
+            </span>
+            <h3>Apache License 2.0</h3>
+            <p>Permissive, audit-friendly licensing &mdash; usable in commercial products, with an explicit patent grant, and no copyleft on anything that depends on or wraps MT Analyze. Standard reading for any bank&rsquo;s OSS-policy review; full text in <a href="https://github.com/mtanalyze/mtanalyze/blob/main/LICENSE">LICENSE</a>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot-inner">
+        <div>
+          &copy; 2026 <a href="https://www.centerscout.de">Centerscout GmbH</a>.
+          Licensed under the <a href="https://github.com/mtanalyze/mtanalyze/blob/main/LICENSE">Apache License 2.0</a>.
+        </div>
+        <div class="foot-links">
+          <a href="https://github.com/mtanalyze/mtanalyze/releases.atom" type="application/atom+xml" title="Subscribe to release updates (Atom feed)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align: -2px; margin-right: 5px;">
+              <path d="M5 3a16 16 0 0 1 16 16h-3A13 13 0 0 0 5 6V3z"/>
+              <path d="M5 10a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6v-3z"/>
+              <circle cx="6.5" cy="17.5" r="2.2"/>
+            </svg>
+            Release updates (Atom)
+          </a>
+          <span class="foot-sep">&middot;</span>
+          <a href="https://github.com/mtanalyze/mtanalyze/issues">Report an issue</a>
+          <span class="foot-sep">&middot;</span>
+          <a href="impressum.html">Impressum</a>
+          <span class="foot-sep">&middot;</span>
+          <a href="datenschutz.html">Datenschutz</a>
+        </div>
+      </div>
+      <p class="trademark">
+        SWIFT is a registered trademark of S.W.I.F.T. SCRL. MT Analyze is an independent open source project and is not affiliated with S.W.I.F.T. SCRL.
+      </p>
+    </div>
+  </footer>
 
 </body>
 </html>
