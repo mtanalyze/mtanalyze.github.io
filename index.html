@@ -389,14 +389,11 @@
       color: var(--accent);
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     }
-    .ref-table td .or { color: var(--fg-muted); margin: 0 6px; font-size: 13px; }
     .ref-note {
       margin: 18px 2px 0;
       color: var(--fg-muted);
       font-size: 14px;
     }
-
-    .expr-table td:first-child { width: 38%; white-space: nowrap; }
 
     .types-table td:first-child { width: 80px; white-space: nowrap; font-weight: 600; color: var(--fg); }
     .types-table td:nth-child(3) { color: var(--fg-muted); width: 36%; }
@@ -413,7 +410,6 @@
 
     @media (max-width: 720px) {
       .ref-table th, .ref-table td { padding: 10px 12px; }
-      .expr-table td:first-child,
       .types-table td:first-child { width: auto; white-space: normal; }
       .types-table td:nth-child(3) { width: auto; }
     }
@@ -551,7 +547,7 @@
               <path d="M18 16l.8 2.2L21 19l-2.2.8L18 22l-.8-2.2L15 19l2.2-.8z"/>
             </svg>
             <h3>Simplicity</h3>
-            <p>One window, one table, one click to detail. No menus to learn, no perspectives to configure.</p>
+            <p>One window, one table, one click to detail. Validated by early users at a Swiss tier-1 bank.</p>
           </li>
 
           <li class="tenet">
@@ -581,15 +577,6 @@
             <p>Pure desktop &mdash; no server, no SaaS, no upload of bank data. The &ldquo;no outbound network calls&rdquo; build check makes the promise enforced, not just stated.</p>
           </li>
         </ul>
-      </div>
-    </section>
-
-    <section class="quote-section">
-      <div class="container">
-        <figure class="quote">
-          <blockquote>Looks decent Ralf. I really liked how simplified it is.</blockquote>
-          <cite>&mdash; Process Lead Securities, Swiss tier-1 bank</cite>
-        </figure>
       </div>
     </section>
 
@@ -648,6 +635,15 @@
       </div>
     </section>
 
+    <section class="quote-section">
+      <div class="container">
+        <figure class="quote">
+          <blockquote>Looks decent Ralf. I really liked how simplified it is.</blockquote>
+          <cite>&mdash; Process Lead Securities, Swiss tier-1 bank</cite>
+        </figure>
+      </div>
+    </section>
+
     <section class="ref-section types">
       <div class="container">
         <h2>Supported message types</h2>
@@ -690,44 +686,6 @@
 
         <p class="ref-note">
           Parsing is provided by <a href="https://github.com/prowide/prowide-core">Prowide Core</a> (Apache 2.0).
-        </p>
-      </div>
-    </section>
-
-    <section class="ref-section expr">
-      <div class="container">
-        <h2>Quick Filter expression language</h2>
-        <p class="ref-lead">
-          A row of fields below each column. Type an expression and press <strong>Tab</strong> or
-          <strong>Enter</strong> to apply. Matching is case-insensitive.
-        </p>
-
-        <div class="ref-wrap">
-          <table class="ref-table expr-table">
-            <thead>
-              <tr><th>Expression</th><th>Meaning</th></tr>
-            </thead>
-            <tbody>
-              <tr><td><code>value</code></td><td>Contains (default)</td></tr>
-              <tr><td><code>=value</code></td><td>Equal</td></tr>
-              <tr><td><code>=</code></td><td>Empty (field has no value)</td></tr>
-              <tr><td><code>!=value</code><span class="or">or</span><code>!value</code><span class="or">or</span><code>&lt;&gt;value</code></td><td>Not equal</td></tr>
-              <tr><td><code>!=</code></td><td>Not empty (field has any value)</td></tr>
-              <tr><td><code>^value</code></td><td>Begins with</td></tr>
-              <tr><td><code>$value</code></td><td>Ends with</td></tr>
-              <tr><td><code>%value</code></td><td>Contains (explicit)</td></tr>
-              <tr><td><code>!^value</code></td><td>Does not begin with</td></tr>
-              <tr><td><code>!%value</code></td><td>Does not contain</td></tr>
-              <tr><td><code>&lt;value</code><span class="or">/</span><code>&gt;value</code></td><td>Less / greater than</td></tr>
-              <tr><td><code>&lt;=value</code><span class="or">/</span><code>&gt;=value</code></td><td>Less / greater or equal</td></tr>
-              <tr><td><code>lo-hi</code></td><td>Between <em>lo</em> and <em>hi</em> (inclusive)</td></tr>
-              <tr><td><code>term1+term2</code></td><td>OR &mdash; matches if any term matches (e.g. <code>=EUR+=USD</code>, <code>^DE+^AT</code>)</td></tr>
-            </tbody>
-          </table>
-        </div>
-
-        <p class="ref-note">
-          Expressions from different columns are combined with <strong>AND</strong> by default; toggle to <strong>OR</strong> in the toolbar. Right-click a Quick Filter field to save the current expressions as a named profile.
         </p>
       </div>
     </section>
