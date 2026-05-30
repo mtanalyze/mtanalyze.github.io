@@ -367,6 +367,41 @@
       overflow: hidden;
       background: var(--bg-elev);
     }
+    .mt-groups {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 640px) {
+      .mt-groups { grid-template-columns: 1fr; }
+    }
+    .mt-group h3 {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--fg-muted);
+      margin: 0 0 10px;
+    }
+    .mt-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .mt-row {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      font-size: 14px;
+    }
+    .mt-num {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      min-width: 32px;
+    }
+    .mt-name { color: var(--fg); }
     table.ref-table {
       width: 100%;
       border-collapse: collapse;
@@ -696,37 +731,37 @@
           MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade and cash reporting. Files of other MT types still parse via Prowide Core &mdash; if the type can&rsquo;t be detected, you&rsquo;ll be prompted to pick one.
         </p>
 
-        <div class="ref-wrap">
-          <table class="ref-table types-table">
-            <thead>
-              <tr><th>MT</th><th>Name</th><th>Rows per message</th></tr>
-            </thead>
-            <tbody>
-              <tr class="section-head"><td colspan="3">Securities &mdash; statements (multi-entry)</td></tr>
-              <tr><td>535</td><td>Statement of Holdings</td><td>One per holding (SUBBAL)</td></tr>
-              <tr><td>536</td><td>Statement of Transactions</td><td>One per transaction (TRANSDET)</td></tr>
-              <tr><td>537</td><td>Statement of Pending Transactions</td><td>One per transaction (TRANSDET)</td></tr>
-
-              <tr class="section-head"><td colspan="3">Securities &mdash; settlement instructions &amp; confirmations</td></tr>
-              <tr><td>540</td><td>Receive Free</td><td>One per message</td></tr>
-              <tr><td>541</td><td>Receive Against Payment</td><td>One per message</td></tr>
-              <tr><td>542</td><td>Deliver Free</td><td>One per message</td></tr>
-              <tr><td>543</td><td>Deliver Against Payment</td><td>One per message</td></tr>
-              <tr><td>544</td><td>Receive Free Confirmation</td><td>One per message</td></tr>
-              <tr><td>545</td><td>Receive Against Payment Confirmation</td><td>One per message</td></tr>
-              <tr><td>546</td><td>Deliver Free Confirmation</td><td>One per message</td></tr>
-              <tr><td>547</td><td>Deliver Against Payment Confirmation</td><td>One per message</td></tr>
-              <tr><td>548</td><td>Settlement Status and Processing Advice</td><td>One per message</td></tr>
-
-              <tr class="section-head"><td colspan="3">Triparty collateral</td></tr>
-              <tr><td>527</td><td>Triparty Collateral Instruction</td><td>One per message</td></tr>
-              <tr><td>558</td><td>Triparty Collateral Status and Processing Advice</td><td>One per message</td></tr>
-
-              <tr class="section-head"><td colspan="3">Cash reporting &mdash; statements (multi-entry)</td></tr>
-              <tr><td>940</td><td>Customer Statement Message</td><td>One per statement line (tag :61:)</td></tr>
-              <tr><td>950</td><td>Statement Message</td><td>One per statement line (tag :61:)</td></tr>
-            </tbody>
-          </table>
+        <div class="mt-groups">
+          <div class="mt-group">
+            <h3>Statements</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">535</span><span class="mt-name">Statement of Holdings</span></div>
+              <div class="mt-row"><span class="mt-num">536</span><span class="mt-name">Statement of Transactions</span></div>
+              <div class="mt-row"><span class="mt-num">537</span><span class="mt-name">Statement of Pending Transactions</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Settlement instructions &amp; confirmations</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">540–543</span><span class="mt-name">Receive / Deliver Free or Against Payment</span></div>
+              <div class="mt-row"><span class="mt-num">544–547</span><span class="mt-name">Confirmations</span></div>
+              <div class="mt-row"><span class="mt-num">548</span><span class="mt-name">Settlement Status and Processing Advice</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Triparty collateral</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">527</span><span class="mt-name">Triparty Collateral Instruction</span></div>
+              <div class="mt-row"><span class="mt-num">558</span><span class="mt-name">Triparty Collateral Status Advice</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Cash reporting</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">940</span><span class="mt-name">Customer Statement Message</span></div>
+              <div class="mt-row"><span class="mt-num">950</span><span class="mt-name">Statement Message</span></div>
+            </div>
+          </div>
         </div>
 
         <p class="ref-note">
