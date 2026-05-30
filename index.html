@@ -98,7 +98,15 @@
     .hero {
       padding: 96px 0 56px;
       text-align: center;
+      position: relative;
+      background:
+        url("hero-bg.svg") center top / cover no-repeat,
+        radial-gradient(120% 140% at 80% 12%, rgba(120, 182, 255, 0.10), rgba(120, 182, 255, 0) 55%),
+        var(--bg);
+      border-bottom: 1px solid var(--border);
     }
+    /* keep the hero text crisply above the constellation graphic */
+    .hero .container { position: relative; z-index: 1; }
     .hero h1 {
       font-size: clamp(36px, 5.5vw, 60px);
       line-height: 1.08;
@@ -488,6 +496,43 @@
       line-height: 1.5;
       color: #6b7794;
     }
+
+    /* ------- about section ------- */
+    .about-section {
+      border-top: 1px solid var(--border);
+      padding: 56px 0;
+    }
+    .about-section h2 {
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--fg-muted);
+      margin: 0 0 20px;
+    }
+    .about-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      max-width: 560px;
+    }
+    .about-card p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--fg);
+    }
+    .about-card p:last-child { margin-bottom: 0; }
+    .about-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--accent);
+      text-decoration: none;
+      border-bottom: none;
+    }
+    .about-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -775,11 +820,33 @@
     </section>
   </main>
 
+  <section class="about-section">
+    <div class="container">
+      <h2>Developer</h2>
+      <div class="about-card">
+        <div>
+          <p>MT Analyze is built and maintained by <strong>Ralf Schwarz</strong>, an independent IT consultant specialising in securities settlement and SWIFT MT systems.</p>
+          <p>
+            <a class="about-link" href="https://www.ralfschwarz.net">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 0 20M12 2a15.3 15.3 0 0 0 0 20"/></svg>
+              ralfschwarz.net
+            </a>
+            &nbsp;&middot;&nbsp;
+            <a class="about-link" href="https://www.linkedin.com/in/ralfschwarz/">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77C.8 0 0 .78 0 1.74v20.52C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.74V1.74C24 .78 23.2 0 22.22 0z"/></svg>
+              LinkedIn
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="container">
       <div class="foot-inner">
         <div>
-          &copy; 2026 <a href="https://www.centerscout.de">Centerscout GmbH</a>.
+          &copy; 2026 Ralf Schwarz.
           Licensed under the <a href="https://github.com/mtanalyze/mtanalyze/blob/main/LICENSE">Apache License 2.0</a>.
         </div>
         <div class="foot-links">
