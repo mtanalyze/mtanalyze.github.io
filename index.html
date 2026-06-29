@@ -650,12 +650,44 @@
 
           <li class="tenet">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-              <path d="m9 12 2 2 4-4"/>
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
             </svg>
-            <h3>No data leakage</h3>
-            <p>Pure desktop &mdash; no server, no SaaS, no upload of bank data. The &ldquo;no outbound network calls&rdquo; build check makes the promise enforced, not just stated.</p>
+            <h3>Streaming for large files</h3>
+            <p>Files of several hundred MB are streamed on load &mdash; 100,000+ messages render in the table without memory spikes or freezes. Analyse days of mixed SWIFT MT traffic in a single session.</p>
           </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <line x1="10" y1="9" x2="8" y2="9"/>
+            </svg>
+            <h3>Log file extraction</h3>
+            <p>Drops straight onto log files and extracts embedded SWIFT MT messages automatically &mdash; no manual copy-paste, no pre-processing required.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/>
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <h3>Self-healing parser</h3>
+            <p>Truncated or malformed messages are not skipped &mdash; the parser recovers gracefully and extracts whatever fields are intact, keeping the full batch visible.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="8" height="18" rx="1.5"/>
+              <rect x="13" y="3" width="8" height="18" rx="1.5"/>
+              <path d="M7 8h0M17 8h0M7 12h0M17 12h0M7 16h0M17 16h0"/>
+            </svg>
+            <h3>MT 536 to MT 54x conversion</h3>
+            <p>Securities statements (MT 536) and settlement instructions (MT 544–547) are displayed together. MT 536 pending entries can be converted to MT 544–547 for direct comparison.</p>
+          </li>
+
         </ul>
       </div>
     </section>
