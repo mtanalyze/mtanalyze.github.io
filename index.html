@@ -704,6 +704,101 @@
         </div>
       </div>
     </section>
+
+    <section class="ref-section types">
+      <div class="container">
+        <h2>Supported message types</h2>
+        <p class="ref-lead">
+          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade, corporate actions and cash reporting. Files of other MT types still parse via Prowide Core &mdash; if the type can&rsquo;t be detected, you&rsquo;ll be prompted to pick one.
+        </p>
+
+        <div class="mt-groups">
+          <div class="mt-group">
+            <h3>Trade confirmation &amp; allegement</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">509</span><span class="mt-name">Trade Status Message</span></div>
+              <div class="mt-row"><span class="mt-num">514</span><span class="mt-name">Trade Allegement</span></div>
+              <div class="mt-row"><span class="mt-num">515</span><span class="mt-name">Client Confirmation of Purchase or Sale</span></div>
+              <div class="mt-row"><span class="mt-num">517</span><span class="mt-name">Trade Confirmation Affirmation</span></div>
+              <div class="mt-row"><span class="mt-num">518</span><span class="mt-name">Market-Side Confirmation of Purchase or Sale</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Transaction processing</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">530</span><span class="mt-name">Transaction Processing Command</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Securities statements</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">535</span><span class="mt-name">Statement of Holdings</span></div>
+              <div class="mt-row"><span class="mt-num">536</span><span class="mt-name">Statement of Transactions</span></div>
+              <div class="mt-row"><span class="mt-num">537</span><span class="mt-name">Statement of Pending Transactions</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Settlement instructions</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">540</span><span class="mt-name">Receive Free</span></div>
+              <div class="mt-row"><span class="mt-num">541</span><span class="mt-name">Receive Against Payment</span></div>
+              <div class="mt-row"><span class="mt-num">542</span><span class="mt-name">Deliver Free</span></div>
+              <div class="mt-row"><span class="mt-num">543</span><span class="mt-name">Deliver Against Payment</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Settlement confirmations</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">544</span><span class="mt-name">Receive Free Confirmation</span></div>
+              <div class="mt-row"><span class="mt-num">545</span><span class="mt-name">Receive Against Payment Confirmation</span></div>
+              <div class="mt-row"><span class="mt-num">546</span><span class="mt-name">Deliver Free Confirmation</span></div>
+              <div class="mt-row"><span class="mt-num">547</span><span class="mt-name">Deliver Against Payment Confirmation</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Settlement advise</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">548</span><span class="mt-name">Settlement Status and Processing Advice</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Triparty agent</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">527</span><span class="mt-name">Triparty Collateral Instruction</span></div>
+              <div class="mt-row"><span class="mt-num">558</span><span class="mt-name">Triparty Collateral Status and Processing Advice</span></div>
+              <div class="mt-row"><span class="mt-num">569</span><span class="mt-name">Triparty Collateral and Exposure Statement</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Corporate actions</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">564</span><span class="mt-name">Corporate Action Notification</span></div>
+              <div class="mt-row"><span class="mt-num">565</span><span class="mt-name">Corporate Action Instruction</span></div>
+              <div class="mt-row"><span class="mt-num">566</span><span class="mt-name">Corporate Action Confirmation</span></div>
+              <div class="mt-row"><span class="mt-num">567</span><span class="mt-name">Corporate Action Status and Processing Advice</span></div>
+              <div class="mt-row"><span class="mt-num">568</span><span class="mt-name">Corporate Action Narrative</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Settlement allegement</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">578</span><span class="mt-name">Settlement Allegement</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Cash statements</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">940</span><span class="mt-name">Customer Statement Message</span></div>
+              <div class="mt-row"><span class="mt-num">950</span><span class="mt-name">Statement Message</span></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="ref-note">
+          Parsing is provided by <a href="https://github.com/prowide/prowide-core">Prowide Core</a> (Apache 2.0).
+        </p>
+      </div>
+    </section>
   </main>
 
   <footer>
