@@ -1,21 +1,21 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MT Analyze — SWIFT MT Nachrichten finden und Zusammenhänge verstehen</title>
-  <meta name="description" content="Open-Source-Desktop-Tool zum Finden und Verstehen von SWIFT-MT-Nachrichten. Lädt beliebige MT-Dateien in eine Tabelle, erklärt jedes Feld nach ISO 15022 und zeigt Zusammenhänge zwischen Nachrichten über ihre Referenzen.">
+  <title>MT Analyze — The fast way through a stack of SWIFT MT messages</title>
+  <meta name="description" content="Open-source desktop tool for analyzing SWIFT MT messages. Load any MT type into one table, see the ISO 15022 meaning of every field, and compare messages side by side.">
   <meta name="theme-color" content="#0b1220">
 
   <meta property="og:title" content="MT Analyze">
-  <meta property="og:description" content="Schon mal versucht, ein MT536 in Excel zu bekommen?">
-  <meta property="og:image" content="https://mtanalyze.com/gui.png">
+  <meta property="og:description" content="The fast way through a stack of SWIFT MT messages.">
+  <meta property="og:image" content="https://mtanalyze.com/gui.gif">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://mtanalyze.com">
   <meta name="twitter:card" content="summary_large_image">
  
 
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b1220'/%3E%3Ctext x='50%25' y='54%25' text-anchor='middle' font-family='Inter,Arial' font-size='24' font-weight='700' fill='%2378b6ff' dominant-baseline='middle'%3EMT%3C/text%3E%3C/svg%3E">
   <link rel="alternate" type="application/atom+xml" title="MT Analyze releases" href="https://github.com/mtanalyze/mtanalyze/releases.atom"> 
   <style>
     :root {
@@ -92,7 +92,7 @@
       letter-spacing: -0.03em;
     }
     .nav-links { display: flex; gap: 22px; align-items: center; }
-    .nav-links a { display: inline-flex; align-items: center; gap: 6px; color: var(--fg-muted); font-size: 15px; }
+    .nav-links a { color: var(--fg-muted); font-size: 15px; }
     .nav-links a:hover { color: var(--fg); text-decoration: none; }
 
     /* ------- hero ------- */
@@ -128,6 +128,95 @@
       margin: 0 auto 36px;
     }
 
+    .cta-row {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 16px;
+      border: 1px solid transparent;
+      transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+      cursor: pointer;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-1px); }
+    .btn-primary {
+      background: var(--accent);
+      color: #07101f;
+    }
+    .btn-primary:hover { background: #95c5ff; color: #07101f; }
+    .btn-secondary {
+      background: transparent;
+      color: var(--fg);
+      border-color: var(--border);
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--fg); }
+
+    .meta {
+      color: var(--fg-muted);
+      font-size: 14px;
+      margin-top: 10px;
+    }
+    .meta code {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 13px;
+      color: var(--accent);
+    }
+
+    /* ------- tenets / differentiators ------- */
+    .tenets-section {
+      padding: 32px 0 64px;
+      border-bottom: 1px solid var(--border);
+    }
+    .tenets-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .tenet {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tenet svg {
+      width: 26px;
+      height: 26px;
+      color: var(--accent);
+    }
+    .tenet h3 {
+      margin: 0;
+      font-size: 15px;
+      color: var(--fg);
+      font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+    .tenet p {
+      margin: 0;
+      color: var(--fg-muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    @media (max-width: 900px) {
+      .tenets-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    }
+    @media (max-width: 520px) {
+      .tenets-grid { grid-template-columns: 1fr; }
+    }
+
     /* ------- screenshot ------- */
     .showcase {
       padding: 24px 0 80px;
@@ -150,14 +239,48 @@
       height: auto;
       border-radius: 8px;
     }
+    .showcase-caption {
+      text-align: center;
+      color: var(--fg-muted);
+      font-size: 13px;
+      margin: 14px auto 0;
+      max-width: 720px;
+    }
+    .showcase-caption strong { color: var(--fg); font-weight: 600; }
+    .inputs {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+    .input-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      color: var(--fg-muted);
+      font-size: 14px;
+    }
+    .input-chip svg { color: var(--accent); flex-shrink: 0; }
+    .inputs-caption {
+      text-align: center;
+      color: var(--fg-muted);
+      font-size: 14px;
+      margin-top: 14px;
+    }
+
     /* ------- pitch strip ------- */
     .pitch {
       padding: 0 0 96px;
     }
     .pitch-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 28px 40px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
     }
     .pitch-item h3 {
       font-size: 16px;
@@ -335,7 +458,18 @@
       .types-table td:nth-child(3) { width: auto; }
     }
 
-
+    /* ------- quality & security ------- */
+    .check-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .check-item {
+      background: var(--bg-elev);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 22px;
+    }
     .check-icon {
       width: 36px;
       height: 36px;
@@ -346,6 +480,31 @@
       align-items: center;
       justify-content: center;
       margin-bottom: 14px;
+    }
+    .check-item h3 {
+      font-size: 16px;
+      margin: 0 0 6px;
+      color: var(--fg);
+      font-weight: 600;
+      letter-spacing: -0.005em;
+    }
+    .check-item p {
+      margin: 0;
+      color: var(--fg-muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .check-item code {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 12px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+    @media (max-width: 720px) {
+      .check-grid { grid-template-columns: 1fr; }
     }
 
     /* ------- footer ------- */
@@ -417,26 +576,9 @@
         <span>MT Analyze</span>
       </a>
       <nav class="nav-links">
-        <a href="https://github.com/mtanalyze/mtanalyze/releases/latest">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M12 3v12"/><path d="m6 9 6 6 6-6"/><path d="M5 21h14"/>
-          </svg>
-          Download
-        </a>
-        <a href="https://central.sonatype.com/artifact/com.mtanalyze/mtanalyze">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.73Z"/>
-            <path d="m3.3 7 8.7 5 8.7-5"/>
-            <path d="M12 22V12"/>
-          </svg>
-          Maven Central
-        </a>
-        <a class="gh" href="https://github.com/mtanalyze/mtanalyze">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.96 10.96 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56C20.71 21.38 24 17.07 24 12 24 5.65 18.85.5 12 .5Z"/>
-          </svg>
-          GitHub
-        </a>
+        <a href="https://github.com/mtanalyze/mtanalyze#readme">Docs</a>
+        <a href="https://central.sonatype.com/artifact/com.mtanalyze/mtanalyze">Maven Central</a>
+        <a class="gh" href="https://github.com/mtanalyze/mtanalyze">GitHub</a>
       </nav>
     </div>
   </header>
@@ -444,20 +586,103 @@
   <main>
     <section class="hero">
       <div class="container">
-        <h1>SWIFT MT Nachrichten finden und <span class="accent">Zusammenhänge verstehen</span>.</h1>
+        <h1>The fast way through a stack of <span class="accent">SWIFT MT messages</span>.</h1>
         <p class="tagline">
-          Große Datenmengen, unübliche Formate &mdash; die meisten Werkzeuge geben da auf.
-          MT Analyze macht daraus eine Zeile pro Eintrag, erklärt jedes Feld nach
-          ISO 15022 und zeigt, welche Nachrichten über ihre Referenzen zusammengehören.
+          Open-source desktop tool for everyone working with SWIFT MT messages.
+          Load any mix of MT files into one harmonized entries table, read the ISO 15022 meaning
+          of every field, and compare messages side by side.
         </p>
+
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/mtanalyze/mtanalyze/releases/latest">
+            Download latest release
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3v12"/><path d="m6 9 6 6 6-6"/><path d="M5 21h14"/>
+            </svg>
+          </a>
+          <a class="btn btn-secondary" href="https://github.com/mtanalyze/mtanalyze">
+            View on GitHub
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.87-1.54-3.87-1.54-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a10.96 10.96 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.73.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14 0 1.55-.01 2.8-.01 3.18 0 .31.21.68.8.56C20.71 21.38 24 17.07 24 12 24 5.65 18.85.5 12 .5Z"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="meta">
+          Single self-contained JAR &middot; requires <code>Java 17+</code> &middot; no installation, no admin rights
+        </p>
+      </div>
+    </section>
+
+    <section class="tenets-section">
+      <div class="container">
+        <ul class="tenets-grid">
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 3l1.6 4.4L18 9l-4.4 1.6L12 15l-1.6-4.4L6 9l4.4-1.6z"/>
+              <path d="M18 16l.8 2.2L21 19l-2.2.8L18 22l-.8-2.2L15 19l2.2-.8z"/>
+            </svg>
+            <h3>Simplicity</h3>
+            <p>One window, one table, one click to detail.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4z"/>
+              <path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/>
+            </svg>
+            <h3>ISO 15022 native</h3>
+            <p>Works directly with the ISO 15022 message model internally &mdash; any valid SWIFT MT message is handled without loss of information.</p>
+          </li>
+
+          <li class="tenet">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="1.5"/>
+              <line x1="3" y1="9" x2="21" y2="9"/>
+              <line x1="3" y1="15" x2="21" y2="15"/>
+              <line x1="9" y1="3" x2="9" y2="21"/>
+            </svg>
+            <h3>Tabular overview</h3>
+            <p>Every message lands in one sortable, filterable table &mdash; click any row to open a full field-by-field detail view.</p>
+          </li>
+
+        </ul>
       </div>
     </section>
 
     <section class="showcase">
       <div class="container">
         <div class="showcase-frame">
-          <img src="gui.png" alt="MT Analyze Demo: ein Beispiel-MT-536-Wertpapierstatement von Citi wird per Drag &amp; Drop geladen, anschließend werden zwei Zeilen nebeneinander im Diff-View verglichen">
+          <img src="gui.gif" alt="MT Analyze demo: a sample MT 536 securities statement from Citi is loaded via drag &amp; drop, then two rows are compared side by side in the Diff view">
         </div>
+        <p class="showcase-caption">
+          Demo: a sample <strong>MT 536</strong> securities statement from <a href="https://www.citibank.com/mss/sa/dcc/swift/iso_15022/msg_fmt_matrix.html">Citi&rsquo;s ISO 15022 message format matrix</a>, loaded by drag &amp; drop, with two rows compared in the Diff view.
+        </p>
+
+        <div class="inputs" aria-label="Ways to load SWIFT MT data">
+          <span class="input-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
+              <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/>
+              <path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>
+            </svg>
+            Drag &amp; drop a file
+          </span>
+          <span class="input-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="8" y="3" width="8" height="4" rx="1"/>
+              <path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/>
+            </svg>
+            Paste an MT snippet
+          </span>
+          <span class="input-chip">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 5v14"/><path d="M5 12h14"/>
+            </svg>
+            Import file
+          </span>
+        </div>
+        <p class="inputs-caption">Drop, paste or import &mdash; every MT lands in the same entries table.</p>
       </div>
     </section>
 
@@ -465,76 +690,16 @@
       <div class="container">
         <div class="pitch-grid">
           <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M9 10v10"/>
-              </svg>
-            </span>
-            <h3>Eine vereinheitlichte Tabelle für alle Einträge</h3>
-            <p>Jeder MT-Typ landet in derselben Tabelle. Wiederholende Blöcke &mdash; etwa MT-536-Transaktionen oder MT-535-Bestände &mdash; werden jeweils zu einer eigenen Zeile. Gemeinsame Referenzen verknüpfen Einträge über die gesamte Transaktionskette.</p>
+            <h3>One harmonized entries table</h3>
+            <p>Drop in any number of files with mixed MT types. Statements (536, 940) become one row per entry; simpler MTs a single row &mdash; all sortable, filterable and bookmarkable in one view.</p>
           </div>
           <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 3v10"/><path d="m8 9 4 4 4-4"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/>
-              </svg>
-            </span>
-            <h3>Liest jedes Bulk-Format, das du ihm gibst</h3>
-            <p>Öffne ein ganzes Verzeichnis, eine rohe Logdatei oder eine einzelne RJE-Bulk-Datei &mdash; alles funktioniert gleich. <strong>Remove Duplicates</strong> entfernt exakte Duplikate. <strong>Save</strong> schreibt sauberes Standard-RJE zurück.</p>
+            <h3>Detail view on every row</h3>
+            <p>Click a row for <strong>Tags</strong> (with ISO 15022 descriptions), <strong>Components</strong> and <strong>Source</strong>. Select two or more rows and the <strong>Diff</strong> tab opens automatically with deviating cells highlighted.</p>
           </div>
           <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/>
-              </svg>
-            </span>
-            <h3>Detailansicht zu jeder Zeile</h3>
-            <p>Klick auf eine Zeile zeigt <strong>Tags</strong>, <strong>Components</strong> und <strong>Source</strong>. Zwei oder mehr Zeilen auswählen, und <strong>Diff</strong> hebt automatisch jede Abweichung hervor.</p>
-          </div>
-          <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>
-              </svg>
-            </span>
-            <h3>Volltextsuche, vom Arbeitsplatz bis zum Cluster</h3>
-            <p>Ein Tag passt bequem in den Speicher &mdash; eine Woche nicht mehr. Dafür gibt es den eingebauten <strong>Lucene</strong>-Index, ohne Einrichtung. Soll es als Service für eine ganze Abteilung laufen, mit mehreren Nutzern und Zugriffskontrolle? Dann <strong>Elasticsearch</strong>.</p>
-          </div>
-          <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M17 2 21 6 17 10"/><path d="M3 6h18"/><path d="M7 22 3 18 7 14"/><path d="M21 18H3"/>
-              </svg>
-            </span>
-            <h3>Vom Statement zur Abwicklungsbestätigung</h3>
-            <p>Rechtsklick auf eine MT-536-Transaktion erzeugt automatisch die passende MT-544&ndash;547-Abwicklungsbestätigung. Kein manuelles Abtippen.</p>
-          </div>
-          <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10"/><path d="M7 13h6"/>
-              </svg>
-            </span>
-            <h3>Findet Nachrichten in Logdateien</h3>
-            <p>MT Analyze auf eine rohe Logdatei ansetzen &mdash; ein ganzer Tageslog mit über 100.000 SWIFT-Nachrichten ist kein Problem. Gefunden und rekonstruiert, auch über umgebrochene Zeilen hinweg.</p>
-          </div>
-          <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>
-              </svg>
-            </span>
-            <h3>Mehrere Dateien parallel im Blick</h3>
-            <p>Jede geöffnete Datei bekommt ihren eigenen Tab. Rechtsklick auf eine Zeile mit <strong>Isolate Entry in New Tab</strong> holt genau diesen einen Eintrag &mdash; etwa eine MT-536-Transaktion &mdash; ohne den Rest des Statements in einen neuen Tab.</p>
-          </div>
-          <div class="pitch-item">
-            <span class="check-icon">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h8"/>
-              </svg>
-            </span>
-            <h3>Export nach Excel &mdash; wahlweise maskiert</h3>
-            <p>Die Tabelle geht direkt nach Excel. Sensible Feldwerte wie Beträge oder Stückzahlen lassen sich beim Import automatisch maskieren, bevor sie irgendwo landen &mdash; in der Tabelle, im Excel-Export oder im Suchindex.</p>
+            <h3>Made for everyday work</h3>
+            <p>Excel-style filters and a quick expression language (<code>=EUR</code>, <code>^DE</code>, <code>!=FREE</code>). Right-click <strong>Copy</strong> on the table or detail view to paste straight into Excel. Persistent notes, bookmarks and <code>.mtd</code> sessions.</p>
           </div>
         </div>
       </div>
@@ -542,37 +707,14 @@
 
     <section class="ref-section types">
       <div class="container">
-        <h2>Unterstützte Nachrichtentypen</h2>
+        <h2>Supported message types</h2>
         <p class="ref-lead">
-          MT Analyze bietet typspezifische Verarbeitung für die SWIFT-MT-Nachrichten, die für Wertpapier-Nachhandel, Kapitalmaßnahmen und Kontoauszüge am relevantesten sind. Dateien anderer MT-Typen werden trotzdem über Prowide Core geparst &mdash; lässt sich der Typ nicht erkennen, wirst du gebeten, ihn auszuwählen.
+          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade, corporate actions and cash reporting. Files of other MT types still parse via Prowide Core &mdash; if the type can&rsquo;t be detected, you&rsquo;ll be prompted to pick one.
         </p>
 
         <div class="mt-groups">
           <div class="mt-group">
-            <h3>Registrierung</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">500</span><span class="mt-name">Instruction to Register</span></div>
-              <div class="mt-row"><span class="mt-num">501</span><span class="mt-name">Statement of Registration Status</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Handelsbestätigung &amp; Allegement</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">509</span><span class="mt-name">Trade Status Message</span></div>
-              <div class="mt-row"><span class="mt-num">514</span><span class="mt-name">Trade Allegement</span></div>
-              <div class="mt-row"><span class="mt-num">515</span><span class="mt-name">Client Confirmation of Purchase or Sale</span></div>
-              <div class="mt-row"><span class="mt-num">517</span><span class="mt-name">Trade Confirmation Affirmation</span></div>
-              <div class="mt-row"><span class="mt-num">518</span><span class="mt-name">Market-Side Confirmation of Purchase or Sale</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Transaktionsverarbeitung</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">530</span><span class="mt-name">Transaction Processing Command</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Wertpapier-Statements</h3>
+            <h3>Securities statements</h3>
             <div class="mt-list">
               <div class="mt-row"><span class="mt-num">535</span><span class="mt-name">Statement of Holdings</span></div>
               <div class="mt-row"><span class="mt-num">536</span><span class="mt-name">Statement of Transactions</span></div>
@@ -580,7 +722,7 @@
             </div>
           </div>
           <div class="mt-group">
-            <h3>Abwicklungsinstruktionen</h3>
+            <h3>Settlement instructions</h3>
             <div class="mt-list">
               <div class="mt-row"><span class="mt-num">540</span><span class="mt-name">Receive Free</span></div>
               <div class="mt-row"><span class="mt-num">541</span><span class="mt-name">Receive Against Payment</span></div>
@@ -589,7 +731,7 @@
             </div>
           </div>
           <div class="mt-group">
-            <h3>Abwicklungsbestätigungen</h3>
+            <h3>Settlement confirmations</h3>
             <div class="mt-list">
               <div class="mt-row"><span class="mt-num">544</span><span class="mt-name">Receive Free Confirmation</span></div>
               <div class="mt-row"><span class="mt-num">545</span><span class="mt-name">Receive Against Payment Confirmation</span></div>
@@ -598,56 +740,18 @@
             </div>
           </div>
           <div class="mt-group">
-            <h3>Abwicklungsstatus</h3>
+            <h3>Settlement advise</h3>
             <div class="mt-list">
               <div class="mt-row"><span class="mt-num">548</span><span class="mt-name">Settlement Status and Processing Advice</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Triparty-Agent</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">527</span><span class="mt-name">Triparty Collateral Instruction</span></div>
-              <div class="mt-row"><span class="mt-num">558</span><span class="mt-name">Triparty Collateral Status and Processing Advice</span></div>
-              <div class="mt-row"><span class="mt-num">569</span><span class="mt-name">Triparty Collateral and Exposure Statement</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Kapitalmaßnahmen</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">564</span><span class="mt-name">Corporate Action Notification</span></div>
-              <div class="mt-row"><span class="mt-num">565</span><span class="mt-name">Corporate Action Instruction</span></div>
-              <div class="mt-row"><span class="mt-num">566</span><span class="mt-name">Corporate Action Confirmation</span></div>
-              <div class="mt-row"><span class="mt-num">567</span><span class="mt-name">Corporate Action Status and Processing Advice</span></div>
-              <div class="mt-row"><span class="mt-num">568</span><span class="mt-name">Corporate Action Narrative</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Abwicklungs-Allegement</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">578</span><span class="mt-name">Settlement Allegement</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Kontoauszüge</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">940</span><span class="mt-name">Customer Statement Message</span></div>
-              <div class="mt-row"><span class="mt-num">950</span><span class="mt-name">Statement Message</span></div>
-            </div>
-          </div>
-          <div class="mt-group">
-            <h3>Freiformnachricht</h3>
-            <div class="mt-list">
-              <div class="mt-row"><span class="mt-num">599</span><span class="mt-name">Free Format Message</span></div>
             </div>
           </div>
         </div>
 
         <p class="ref-note">
-          Das Parsing übernimmt <a href="https://github.com/prowide/prowide-core">Prowide Core</a> (Apache 2.0).
+          Parsing is provided by <a href="https://github.com/prowide/prowide-core">Prowide Core</a> (Apache 2.0).
         </p>
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -655,27 +759,27 @@
       <div class="foot-inner">
         <div>
           &copy; 2026 <a href="https://www.centerscout.de">Centerscout GmbH</a>.
-          Lizenziert unter der <a href="https://github.com/mtanalyze/mtanalyze/blob/main/LICENSE">Apache License 2.0</a>.
+          Licensed under the <a href="https://github.com/mtanalyze/mtanalyze/blob/main/LICENSE">Apache License 2.0</a>.
         </div>
         <div class="foot-links">
-          <a href="https://github.com/mtanalyze/mtanalyze/releases.atom" type="application/atom+xml" title="Release-Updates abonnieren (Atom-Feed)">
+          <a href="https://github.com/mtanalyze/mtanalyze/releases.atom" type="application/atom+xml" title="Subscribe to release updates (Atom feed)">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align: -2px; margin-right: 5px;">
               <path d="M5 3a16 16 0 0 1 16 16h-3A13 13 0 0 0 5 6V3z"/>
               <path d="M5 10a9 9 0 0 1 9 9h-3a6 6 0 0 0-6-6v-3z"/>
               <circle cx="6.5" cy="17.5" r="2.2"/>
-            </svg>
-            Release-Updates (Atom)
+            </svg> 
+            Release updates (Atom)
           </a>
           <span class="foot-sep">&middot;</span>
-          <a href="https://github.com/mtanalyze/mtanalyze/issues">Fehler melden</a>
+          <a href="https://github.com/mtanalyze/mtanalyze/issues">Report an issue</a>
           <span class="foot-sep">&middot;</span>
-          <a href="impressum.html">Impressum</a>
+          <a href="https://www.centerscout.de/impressum.html">Impressum</a>
           <span class="foot-sep">&middot;</span>
           <a href="datenschutz.html">Datenschutz</a>
         </div>
       </div>
       <p class="trademark">
-        SWIFT ist eine eingetragene Marke der S.W.I.F.T. SCRL. MT Analyze ist ein unabhängiges Open-Source-Projekt und steht in keiner Verbindung zur S.W.I.F.T. SCRL.
+        SWIFT is a registered trademark of S.W.I.F.T. SCRL. MT Analyze is an independent open source project and is not affiliated with S.W.I.F.T. SCRL.
       </p>
     </div>
   </footer>
