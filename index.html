@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MT Analyze — The fast way through a stack of SWIFT MT messages</title>
-  <meta name="description" content="Open-source desktop tool for analyzing SWIFT MT messages. Load any MT type into one table, see the ISO 15022 meaning of every field, and compare messages side by side.">
+  <meta name="description" content="Open-source desktop tool for analyzing SWIFT MT messages. Load RJE files into one table of line items, see the ISO 15022 meaning of every field, and compare messages side by side.">
   <meta name="theme-color" content="#0b1220">
 
   <meta property="og:title" content="MT Analyze">
@@ -588,8 +588,8 @@
       <div class="container">
         <h1>The fast way through a stack of <span class="accent">SWIFT MT messages</span>.</h1>
         <p class="tagline">
-          Open-source desktop tool for everyone working with SWIFT MT messages.
-          Load any mix of MT files into one harmonized entries table, read the ISO 15022 meaning
+          Open-source desktop viewer for everyone working with SWIFT MT messages.
+          Load RJE files into one harmonized table of line items, read the ISO 15022 meaning
           of every field, and compare messages side by side.
         </p>
 
@@ -632,7 +632,7 @@
               <path d="M20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7z"/>
             </svg>
             <h3>ISO 15022 native</h3>
-            <p>Works directly with the ISO 15022 message model internally &mdash; any valid SWIFT MT message is handled without loss of information.</p>
+            <p>Works directly with the ISO 15022 message model internally &mdash; messages are read with Prowide Core and shown without loss of information.</p>
           </li>
 
           <li class="tenet">
@@ -655,34 +655,6 @@
         <div class="showcase-frame">
           <img src="gui.png" alt="MT Analyze demo: a sample MT 536 securities statement from Citi is loaded via drag &amp; drop, then two rows are compared side by side in the Diff view">
         </div>
-        <p class="showcase-caption">
-          Demo: a sample <strong>MT 536</strong> securities statement from <a href="https://www.citibank.com/mss/sa/dcc/swift/iso_15022/msg_fmt_matrix.html">Citi&rsquo;s ISO 15022 message format matrix</a>, loaded by drag &amp; drop, with two rows compared in the Diff view.
-        </p>
-
-        <div class="inputs" aria-label="Ways to load SWIFT MT data">
-          <span class="input-chip">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M14 3v4a1 1 0 0 0 1 1h4"/>
-              <path d="M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/>
-              <path d="M12 18v-6"/><path d="m9 15 3 3 3-3"/>
-            </svg>
-            Drag &amp; drop a file
-          </span>
-          <span class="input-chip">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="8" y="3" width="8" height="4" rx="1"/>
-              <path d="M16 5h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2"/>
-            </svg>
-            Paste an MT snippet
-          </span>
-          <span class="input-chip">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M12 5v14"/><path d="M5 12h14"/>
-            </svg>
-            Import file
-          </span>
-        </div>
-        <p class="inputs-caption">Drop, paste or import &mdash; every MT lands in the same entries table.</p>
       </div>
     </section>
 
@@ -691,7 +663,7 @@
         <div class="pitch-grid">
           <div class="pitch-item">
             <h3>One harmonized entries table</h3>
-            <p>Drop in any number of files with mixed MT types. Statements (536, 940) become one row per entry; simpler MTs a single row &mdash; all sortable, filterable and bookmarkable in one view.</p>
+            <p>Open several RJE files, each in its own tab, with mixed MT types. Statements (536, 940) become one row per entry; simpler MTs a single row &mdash; all sortable and filterable in one view.</p>
           </div>
           <div class="pitch-item">
             <h3>Detail view on every row</h3>
@@ -699,7 +671,7 @@
           </div>
           <div class="pitch-item">
             <h3>Made for everyday work</h3>
-            <p>Excel-style filters and a quick expression language (<code>=EUR</code>, <code>^DE</code>, <code>!=FREE</code>). Right-click <strong>Copy</strong> on the table or detail view to paste straight into Excel. Persistent notes, bookmarks and <code>.mtd</code> sessions.</p>
+            <p>Excel-style filters and a quick expression language (<code>=EUR</code>, <code>^DE</code>, <code>!=FREE</code>). Right-click <strong>Copy</strong> on the table or detail view to paste straight into Excel.</p>
           </div>
         </div>
       </div>
@@ -709,7 +681,7 @@
       <div class="container">
         <h2>Supported message types</h2>
         <p class="ref-lead">
-          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade, corporate actions and cash reporting. Files of other MT types still parse via Prowide Core &mdash; if the type can&rsquo;t be detected, you&rsquo;ll be prompted to pick one.
+          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade, corporate actions and cash reporting. Other message types are skipped and reported in the Notifications panel.
         </p>
 
         <div class="mt-groups">
@@ -740,9 +712,56 @@
             </div>
           </div>
           <div class="mt-group">
-            <h3>Settlement advise</h3>
+            <h3>Settlement advice</h3>
             <div class="mt-list">
               <div class="mt-row"><span class="mt-num">548</span><span class="mt-name">Settlement Status and Processing Advice</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Trade confirmation and allegement</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">509</span><span class="mt-name">Trade Status Message</span></div>
+              <div class="mt-row"><span class="mt-num">514</span><span class="mt-name">Trade Allegement</span></div>
+              <div class="mt-row"><span class="mt-num">515</span><span class="mt-name">Client Confirmation of Purchase or Sale</span></div>
+              <div class="mt-row"><span class="mt-num">517</span><span class="mt-name">Trade Confirmation Affirmation</span></div>
+              <div class="mt-row"><span class="mt-num">518</span><span class="mt-name">Market-Side Securities Trade Confirmation</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Transaction processing</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">530</span><span class="mt-name">Transaction Processing Command</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Triparty agent</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">527</span><span class="mt-name">Triparty Collateral Instruction</span></div>
+              <div class="mt-row"><span class="mt-num">558</span><span class="mt-name">Triparty Collateral Status and Processing Advice</span></div>
+              <div class="mt-row"><span class="mt-num">569</span><span class="mt-name">Triparty Collateral and Exposure Statement</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Corporate actions</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">564</span><span class="mt-name">Corporate Action Notification</span></div>
+              <div class="mt-row"><span class="mt-num">565</span><span class="mt-name">Corporate Action Instruction</span></div>
+              <div class="mt-row"><span class="mt-num">566</span><span class="mt-name">Corporate Action Confirmation</span></div>
+              <div class="mt-row"><span class="mt-num">567</span><span class="mt-name">Corporate Action Status and Processing Advice</span></div>
+              <div class="mt-row"><span class="mt-num">568</span><span class="mt-name">Corporate Action Narrative</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Settlement allegement</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">578</span><span class="mt-name">Settlement Allegement</span></div>
+            </div>
+          </div>
+          <div class="mt-group">
+            <h3>Cash statements</h3>
+            <div class="mt-list">
+              <div class="mt-row"><span class="mt-num">940</span><span class="mt-name">Customer Statement</span></div>
+              <div class="mt-row"><span class="mt-num">950</span><span class="mt-name">Statement Message</span></div>
             </div>
           </div>
         </div>
