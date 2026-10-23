@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MT Analyze — The fast way through a stack of SWIFT MT messages</title>
-  <meta name="description" content="Open-source desktop tool for analyzing SWIFT MT messages. Load RJE files into one table of line items, see the ISO 15022 meaning of every field, and compare messages side by side.">
+  <meta name="description" content="Open-source desktop tool for analyzing SWIFT MT messages. Load any MT type into one table, see the ISO 15022 meaning of every field, and compare messages side by side.">
   <meta name="theme-color" content="#0b1220">
 
   <meta property="og:title" content="MT Analyze">
@@ -585,8 +585,8 @@
       <div class="container">
         <h1>The fast way through a stack of <span class="accent">SWIFT MT messages</span>.</h1>
         <p class="tagline">
-          Open-source desktop viewer for everyone working with SWIFT MT messages.
-          Load RJE files into one harmonized table of line items, read the ISO 15022 meaning
+          Open-source desktop tool for everyone working with SWIFT MT messages.
+          Load any mix of MT files into one harmonized entries table, read the ISO 15022 meaning
           of every field, and compare messages side by side.
         </p>
 
@@ -654,7 +654,7 @@
         <div class="pitch-grid">
           <div class="pitch-item">
             <h3>One harmonized entries table</h3>
-            <p>Open several RJE files, each in its own tab, with mixed MT types. Statements (536, 940) become one row per entry; simpler MTs a single row &mdash; all sortable and filterable in one view.</p>
+            <p>Drop in any number of files with mixed MT types. Statements (536, 940) become one row per entry; simpler MTs a single row &mdash; all sortable, filterable and bookmarkable in one view.</p>
           </div>
           <div class="pitch-item">
             <h3>Detail view on every row</h3>
@@ -662,7 +662,7 @@
           </div>
           <div class="pitch-item">
             <h3>Made for everyday work</h3>
-            <p>Excel-style filters and a quick expression language (<code>=EUR</code>, <code>^DE</code>, <code>!=FREE</code>). Right-click <strong>Copy</strong> on the table or detail view to paste straight into Excel.</p>
+            <p>Excel-style filters and a quick expression language (<code>=EUR</code>, <code>^DE</code>, <code>!=FREE</code>). Right-click <strong>Copy</strong> on the table or detail view to paste straight into Excel. Persistent notes, bookmarks and <code>.mtd</code> sessions.</p>
           </div>
         </div>
       </div>
@@ -672,7 +672,7 @@
       <div class="container">
         <h2>Supported message types</h2>
         <p class="ref-lead">
-          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade, corporate actions and cash reporting. Other message types are skipped and reported in the Notifications panel.
+          MT Analyze ships with type-aware handling for the SWIFT MT messages most relevant to securities post-trade, corporate actions and cash reporting. Files of other MT types still parse via Prowide Core &mdash; if the type can&rsquo;t be detected, you&rsquo;ll be prompted to pick one.
         </p>
 
         <div class="mt-groups">
